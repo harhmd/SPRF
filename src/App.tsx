@@ -1,0 +1,1300 @@
+import React, { useState, useMemo } from 'react';
+import {
+  ShieldAlert,
+  ShieldCheck,
+  TrendingDown,
+  TrendingUp,
+  AlertTriangle,
+  DollarSign,
+  Filter,
+  Plus,
+  Search,
+  ChevronRight,
+  CheckCircle2,
+  Clock,
+  Layers,
+  FileSpreadsheet,
+  RefreshCw,
+  Sliders,
+  User,
+  Calendar,
+  X,
+  LayoutDashboard,
+  Grid3X3,
+  FileText,
+  Building,
+  Check,
+  BadgeAlert,
+  Activity,
+  Gauge,
+  Thermometer,
+  Box,
+  Truck,
+  ShieldX,
+  ArrowRight,
+  Info
+} from 'lucide-react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  LineChart,
+  Line,
+  AreaChart,
+  Area
+} from 'recharts';
+
+export interface BowtieModel {
+  hazard: string;
+  topEvent: string;
+  preventiveBarriers: string[];
+  mitigationBarriers: string[];
+}
+
+export interface RiskItem {
+  id: string;
+  title: string;
+  category: string;
+  owner: string;
+  strategy: string;
+  status: string;
+  probInherent: number;
+  lossInherentRM: number;
+  probResidual: number;
+  lossResidualRM: number;
+  mitigationCostRM: number;
+  confidenceVaR95: number;
+  dueDate: string;
+  progress: number;
+  kriLink: string;
+  bowtie: BowtieModel;
+  treatmentPlan: string;
+  contingency: string;
+}
+
+export interface KRIItem {
+  id: string;
+  name: string;
+  category: string;
+  unit: string;
+  currentValue: number;
+  greenLimit: number;
+  amberLimit: number;
+  isInverse?: boolean;
+  status: 'GREEN' | 'AMBER' | 'RED';
+  frequency: string;
+  lastUpdate: string;
+  description: string;
+}
+
+const CATEGORIES = [
+  'Pasar Tani & Runcit Agro',
+  'Rangkaian PPL & Rantaian Sejuk',
+  'Jualan Agro MADANI & Intervensi',
+  'Ladang Kontrak & Hasil Segar',
+  'Agrofood & Penjenamaan AGROMAS',
+  'Regulatori GPL & Kualiti',
+  'Agrobazaar Online & Digital'
+];
+
+const STRATEGIES = ['Mitigate / Reduce', 'Transfer', 'Avoid', 'Accept'];
+const STATUSES = ['Completed', 'In Progress', 'Behind Schedule', 'Under Review', 'Not Started'];
+
+const INITIAL_QUANT_RISKS: RiskItem[] = [
+  {
+    id: 'FAMA-QRA-01',
+    title: 'Lonjakan Harga Pasaran & Defisit Stok Penampan (Jualan Agro MADANI)',
+    category: 'Jualan Agro MADANI & Intervensi',
+    owner: 'En. Hishamuddin (Bhg. Pemasaran Segar & Intervensi)',
+    strategy: 'Mitigate / Reduce',
+    status: 'In Progress',
+    // Quantitative Probabilistic Parameters
+    probInherent: 0.65, // 65% probability
+    lossInherentRM: 6500000, // Potential gross loss RM6.5M
+    probResidual: 0.20, // 20% after mitigation
+    lossResidualRM: 1400000, // Residual exposure RM1.4M
+    mitigationCostRM: 450000, // Cost to implement interventions
+    confidenceVaR95: 2150000, // 95% 1-Month VaR
+    dueDate: '2026-11-20',
+    progress: 75,
+    kriLink: 'KRI-STK-01', // Linked to Days of Inventory KRI
+    bowtie: {
+      hazard: 'Volatiliti Bekalan Makanan Global & Faktor Cuaca Ekstrem',
+      topEvent: 'Defisit Stok Penampan Bawang & Telur Ayam',
+      preventiveBarriers: ['Kontrak Hadapan Pembekal Tempatan 60 Hari', 'Kuota Pelepasan Terperingkat', 'Subsidi Logistik FAMA'],
+      mitigationBarriers: ['Pengaktifan 120 Tapak Jualan Agro MADANI', 'Pengedaran Kecemasan Hab RTC Gopeng & RTC Pasir Puteh']
+    },
+    treatmentPlan: 'Kunci kuota off-take pembekal tempatan 60 hari awal dan edar 1,200 tan metrik stok penampan nasional.',
+    contingency: 'Pemberian subsidi pengangkutan terus dan mobilisasi kargo antara-negeri.'
+  },
+  {
+    id: 'FAMA-QRA-02',
+    title: 'Kerosakan Pemampat Bilik Sejuk Hab PPL Cameron Highlands & Nilai',
+    category: 'Rangkaian PPL & Rantaian Sejuk',
+    owner: 'Pn. Rohana Ramli (Bhg. Logistik & Rantaian Bekalan)',
+    strategy: 'Mitigate / Reduce',
+    status: 'Behind Schedule',
+    probInherent: 0.50,
+    lossInherentRM: 3200000,
+    probResidual: 0.12,
+    lossResidualRM: 850000,
+    mitigationCostRM: 180000,
+    confidenceVaR95: 1100000,
+    dueDate: '2026-10-31',
+    progress: 45,
+    kriLink: 'KRI-TMP-01',
+    bowtie: {
+      hazard: 'Gelombang Haba & Gangguan Bekalan Tenaga Elektrik Komersial',
+      topEvent: 'Peningkatan Suhu Bilik Sejuk Melebihi 4°C',
+      preventiveBarriers: ['Sistem Dwi-Pemampat Inverter Sandaran', 'Sensor Telemetri IoT 24/7', 'Genset Automatik 15-Saat'],
+      mitigationBarriers: ['Treler Sejuk Beku Mudah Alih 40-Kaki', 'Pengalihan Pantas ke Pusat Pemprosesan Buah Berhampiran']
+    },
+    treatmentPlan: 'Pemasangan sensor telemetri pintar IoT dengan penggera amaran automatik dan dwi-pemampat inverter.',
+    contingency: 'Sewa treler sejuk beku kecemasan 40 kaki serta pengalihan stok kubis ke PPBBS Batu Kurau.'
+  },
+  {
+    id: 'FAMA-QRA-03',
+    title: 'Kemusnahan Tanaman Sayuran Ladang Kontrak Akibat Banjir Monsun Timur Laut',
+    category: 'Ladang Kontrak & Hasil Segar',
+    owner: 'Ir. Zulkifli (Bhg. Ladang Kontrak & Pengembangan)',
+    strategy: 'Transfer',
+    status: 'In Progress',
+    probInherent: 0.70,
+    lossInherentRM: 4800000,
+    probResidual: 0.30,
+    lossResidualRM: 1200000,
+    mitigationCostRM: 320000,
+    confidenceVaR95: 1650000,
+    dueDate: '2026-12-15',
+    progress: 60,
+    kriLink: 'KRI-SUP-01',
+    bowtie: {
+      hazard: 'Limpahan Hujan Lebat Berterusan & Paras Air Sungai Kritikal',
+      topEvent: 'Kerosakan Skala Luas Ladang Sayur Kontrak',
+      preventiveBarriers: ['Jadual Giliran Tanaman Luar Musim', 'Geran Terowong Hujan (Rain Shelters)', 'Parit Saliran Pintar'],
+      mitigationBarriers: ['Skim Takaful Agromakanan KPKM', 'Mobilisasi Bekalan Gantian Segera dari Sabah & Pantai Barat']
+    },
+    treatmentPlan: 'Penstrukturan semula zon penanaman berjadual dan pendaftaran mandatori petani ke Takaful Agromakanan.',
+    contingency: 'Pengaktifan Tabung Bantuan Bencana Pertanian KPKM dan penyelarasan laluan alternatif.'
+  },
+  {
+    id: 'FAMA-QRA-04',
+    title: 'Audit Biosekuriti GACC & Ketidakpatuhan Suhu Eksport Durian Beku AGROMAS',
+    category: 'Agrofood & Penjenamaan AGROMAS',
+    owner: 'Dr. Noraini Othman (Ketua Pegawai FAMACORP / AGROMAS)',
+    strategy: 'Avoid',
+    status: 'Under Review',
+    probInherent: 0.40,
+    lossInherentRM: 5400000,
+    probResidual: 0.08,
+    lossResidualRM: 950000,
+    mitigationCostRM: 260000,
+    confidenceVaR95: 1350000,
+    dueDate: '2027-01-15',
+    progress: 35,
+    kriLink: 'KRI-GPL-01',
+    bowtie: {
+      hazard: 'Pencemaran Mikrobiologi & Keretakan Rantaian Sejuk Rentas Sempadan',
+      topEvent: 'Penolakan Konsainan Kontena di Pintu Masuk Eksport',
+      preventiveBarriers: ['Pensijilan Nitrogen Cecair -80°C', 'Audit Ketat Makmal Bertauliah', 'Pemeteraian Kontena Bersuhu IoT'],
+      mitigationBarriers: ['Diversifikasi Pasaran Gantian (UAE, Australia)', 'Pemprosesan Hiliran Pes & Puree Durian']
+    },
+    treatmentPlan: 'Penaiktarafan kilang pembekuan nitrogen cair -80°C di Kompleks Pemprosesan Rengit dan Batu Kurau.',
+    contingency: 'Pelan lencongan pasaran ke Asia Barat dan hiliran agroindustri makanan sedia hidang.'
+  },
+  {
+    id: 'FAMA-QRA-05',
+    title: 'Ketidakpatuhan Penggredan, Pembungkusan & Pelabelan (GPL) di Pintu Sempadan',
+    category: 'Regulatori GPL & Kualiti',
+    owner: 'Pn. Farah Nadia (Bhg. Regulatori & Kualiti Standard)',
+    strategy: 'Mitigate / Reduce',
+    status: 'Completed',
+    probInherent: 0.55,
+    lossInherentRM: 2100000,
+    probResidual: 0.15,
+    lossResidualRM: 500000,
+    mitigationCostRM: 110000,
+    confidenceVaR95: 680000,
+    dueDate: '2026-09-30',
+    progress: 100,
+    kriLink: 'KRI-GPL-01',
+    bowtie: {
+      hazard: 'Penyeludupan Hasil Segar Tidak Bergred & Pemalsuan Label Asal Usul',
+      topEvent: 'Kemasukan Produk GPL Tidak Mematuhi Standard Kebangsaan',
+      preventiveBarriers: ['Sistem e-Lesen GPL Bersepadu', 'Imbasan Kod QR Malaysian Best', 'Pengesahan Prapemeriksaan MAQIS'],
+      mitigationBarriers: ['Sitaan Kuarantin Segera di Kompleks Sempadan', 'Pemberitahuan Kompaun Digital Mandatori']
+    },
+    treatmentPlan: 'Penguatkuasaan digital e-Lesen GPL di pintu Bukit Kayu Hitam dan Pelabuhan Klang.',
+    contingency: 'Pusat sitaan kuarantin FAMA-MAQIS dengan tapak pelupusan biosekuriti terkawal.'
+  }
+];
+
+const INITIAL_KRIS: KRIItem[] = [
+  {
+    id: 'KRI-TMP-01',
+    name: 'Suhu Bilik Sejuk PPL (> 4°C)',
+    category: 'Rangkaian PPL & Rantaian Sejuk',
+    unit: 'Minit Sisihan',
+    currentValue: 18,
+    greenLimit: 15,
+    amberLimit: 45,
+    status: 'AMBER', // GREEN, AMBER, RED
+    frequency: 'Masa Nyata (Setiap 5 minit)',
+    lastUpdate: '10 minit lalu',
+    description: 'Tempoh sisihan kumulatif suhu bilik sejuk pra-penyejukan melebihi had standard 4°C.'
+  },
+  {
+    id: 'KRI-STK-01',
+    name: 'Penampan Bekalan JAM (Days of Inventory)',
+    category: 'Jualan Agro MADANI & Intervensi',
+    unit: 'Hari Bekalan',
+    currentValue: 14,
+    greenLimit: 21, // >= 21 is good
+    amberLimit: 10, // < 10 is RED
+    isInverse: true, // Lower is worse
+    status: 'AMBER',
+    frequency: 'Harian (Automasi ERP FAMA)',
+    lastUpdate: 'Pagi ini, 08:30 AM',
+    description: 'Baki hari bekalan komoditi asasi (bawang, telur, minyak masak) dalam simpanan hab kebangsaan.'
+  },
+  {
+    id: 'KRI-SUP-01',
+    name: 'Ketepatan Pembekal Ladang Kontrak (OTIF)',
+    category: 'Ladang Kontrak & Hasil Segar',
+    unit: '% On-Time In-Full',
+    currentValue: 91.5,
+    greenLimit: 95.0,
+    amberLimit: 85.0,
+    isInverse: true,
+    status: 'AMBER',
+    frequency: 'Mingguan',
+    lastUpdate: 'Semalam',
+    description: 'Kadar hasil tanaman kontrak yang dihantar menepati masa dan spesifikasi kuantiti dipersetujui.'
+  },
+  {
+    id: 'KRI-GPL-01',
+    name: 'Kadar Penolakan Konsainan GPL Sempadan',
+    category: 'Regulatori GPL & Kualiti',
+    unit: '% Daripada Jumlah Kargo',
+    currentValue: 1.8,
+    greenLimit: 2.0,
+    amberLimit: 5.0,
+    status: 'GREEN',
+    frequency: 'Masa Nyata (Sistem e-GPL)',
+    lastUpdate: '20 minit lalu',
+    description: 'Peratusan kargo segar yang ditahan atau ditolak di pintu masuk sempadan negara akibat label/gred sub-standard.'
+  }
+];
+
+const formatRM = (val: number) => {
+  if (val >= 1000000) return `RM ${(val / 1000000).toFixed(2)}M`;
+  if (val >= 1000) return `RM ${(val / 1000).toFixed(0)}k`;
+  return `RM ${val.toLocaleString()}`;
+};
+
+const formatPercent = (val: number) => `${(val * 100).toFixed(1)}%`;
+
+export default function App() {
+  const [risks, setRisks] = useState<RiskItem[]>(INITIAL_QUANT_RISKS);
+  const [kris, setKris] = useState<KRIItem[]>(INITIAL_KRIS);
+  const [selectedRisk, setSelectedRisk] = useState<RiskItem | null>(null);
+  const [activeTab, setActiveTab] = useState<'overview' | 'emv' | 'kri' | 'bowtie' | 'register'>('overview');
+  const [categoryFilter, setCategoryFilter] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isTelemetrySimulating, setIsTelemetrySimulating] = useState(false);
+
+  const portfolioMetrics = useMemo(() => {
+    // Expected Monetary Value (EMV) = Probability * Loss
+    const totalInherentEMV = risks.reduce((sum, r) => sum + r.probInherent * r.lossInherentRM, 0);
+    const totalResidualEMV = risks.reduce((sum, r) => sum + r.probResidual * r.lossResidualRM, 0);
+    const totalMitigationInvestment = risks.reduce((sum, r) => sum + r.mitigationCostRM, 0);
+    
+    // Net Value Protected = Gross EMV Reduction - Investment Cost
+    const emvReduction = totalInherentEMV - totalResidualEMV;
+    const netSavings = emvReduction - totalMitigationInvestment;
+    const returnOnMitigation = totalMitigationInvestment > 0 ? (netSavings / totalMitigationInvestment) * 100 : 0;
+
+    // Aggregate 95% Value at Risk (VaR)
+    const portfolioVaR95 = risks.reduce((sum, r) => sum + r.confidenceVaR95, 0);
+
+    // KRI Alert Counts
+    const criticalKri = kris.filter(k => k.status === 'RED').length;
+    const warningKri = kris.filter(k => k.status === 'AMBER').length;
+    const normalKri = kris.filter(k => k.status === 'GREEN').length;
+
+    return {
+      totalInherentEMV,
+      totalResidualEMV,
+      totalMitigationInvestment,
+      emvReduction,
+      netSavings,
+      returnOnMitigation,
+      portfolioVaR95,
+      criticalKri,
+      warningKri,
+      normalKri
+    };
+  }, [risks, kris]);
+
+  const emvComparisonData = useMemo(() => {
+    return risks.map((r) => {
+      const inherentEMV = (r.probInherent * r.lossInherentRM) / 1000;
+      const residualEMV = (r.probResidual * r.lossResidualRM) / 1000;
+      return {
+        name: r.id.replace('FAMA-QRA-', 'QRA-'),
+        title: r.title,
+        InherentEMV: Math.round(inherentEMV),
+        ResidualEMV: Math.round(residualEMV),
+        MitigasiCost: Math.round(r.mitigationCostRM / 1000)
+      };
+    });
+  }, [risks]);
+
+  const handleSimulateTelemetry = () => {
+    setIsTelemetrySimulating(true);
+    setKris((prev) =>
+      prev.map((kri) => {
+        if (kri.id === 'KRI-TMP-01') {
+          // Simulate temporary cold chain spike
+          const newVal = Math.min(60, Math.max(10, kri.currentValue + (Math.random() > 0.5 ? 8 : -5)));
+          return {
+            ...kri,
+            currentValue: newVal,
+            status: newVal > kri.amberLimit ? 'RED' : newVal > kri.greenLimit ? 'AMBER' : 'GREEN',
+            lastUpdate: 'Baru sahaja dikemas kini'
+          };
+        }
+        if (kri.id === 'KRI-STK-01') {
+          // Fluctuate inventory days
+          const newVal = Math.max(8, kri.currentValue + (Math.random() > 0.5 ? 2 : -2));
+          return {
+            ...kri,
+            currentValue: newVal,
+            status: newVal < kri.amberLimit ? 'RED' : newVal < kri.greenLimit ? 'AMBER' : 'GREEN',
+            lastUpdate: 'Baru sahaja dikemas kini'
+          };
+        }
+        return kri;
+      })
+    );
+    setTimeout(() => setIsTelemetrySimulating(false), 600);
+  };
+
+  const filteredRisks = useMemo(() => {
+    return risks.filter((r) => {
+      const matchCat = categoryFilter === 'All' || r.category === categoryFilter;
+      const matchSearch =
+        r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.owner.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchCat && matchSearch;
+    });
+  }, [risks, categoryFilter, searchQuery]);
+
+  const exportQuantCSV = () => {
+    const headers = [
+      'Kod Risiko',
+      'Tajuk Inisiatif',
+      'Kategori',
+      'Pegawai Pemilik',
+      'Kebarangkalian Kasar (P)',
+      'Kerugian Kasar (RM)',
+      'Inherent EMV (RM)',
+      'Kebarangkalian Bersih (P)',
+      'Kerugian Bersih (RM)',
+      'Residual EMV (RM)',
+      'Kos Mitigasi (RM)',
+      '95% VaR (RM)',
+      'Status'
+    ];
+    const rows = risks.map((r) => [
+      r.id,
+      `"${r.title.replace(/"/g, '""')}"`,
+      r.category,
+      `"${r.owner}"`,
+      r.probInherent,
+      r.lossInherentRM,
+      r.probInherent * r.lossInherentRM,
+      r.probResidual,
+      r.lossResidualRM,
+      r.probResidual * r.lossResidualRM,
+      r.mitigationCostRM,
+      r.confidenceVaR95,
+      r.status
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `FAMA_Pengukuran_Risiko_Kuantitatif_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-white pb-24">
+      {/* Top Header Bar */}
+      <header className="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-30 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-emerald-600/20">
+            <Activity className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+              SPRF &bull; FAMA Malaysia
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">
+                Pengukuran Risiko Kuantitatif (EMV &bull; KRI &bull; VaR)
+              </span>
+            </h1>
+            <p className="text-xs text-slate-400">
+              Transformasi Metodologi: Menggantikan Matriks Subjektif 5&times;5 dengan Piawaian Industri Empirikal
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleSimulateTelemetry}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 transition"
+            title="Kemas kini bacaan sensor IoT secara rawak"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 text-teal-400 ${isTelemetrySimulating ? 'animate-spin' : ''}`} />
+            Simulasi KRI Masa-Nyata
+          </button>
+          <button
+            onClick={exportQuantCSV}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white shadow-md shadow-emerald-600/30 transition transform active:scale-95"
+          >
+            <FileSpreadsheet className="w-4 h-4" />
+            Eksport Laporan Kuantitatif
+          </button>
+        </div>
+      </header>
+
+      {/* Main Container */}
+      <main className="flex-1 p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6">
+        
+        {/* Why Industry Replaced 5x5 Matrix Banner */}
+        <div className="p-4 rounded-xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mt-0.5">
+              <Info className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-white">
+                Mengapa Pengukuran Kuantitatif Menggantikan Matriks Tradisional 5&times;5?
+              </h3>
+              <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
+                Matriks kualitatif mengalami masalah <em>Range Compression</em> (menyamakan kerugian RM50k dan RM5M) serta skor yang tidak boleh dijumlahkan. Metodologi industri mengukur <strong>Expected Monetary Value (EMV)</strong>, had pendedahan <strong>Value at Risk (95% VaR)</strong>, telemetri berterusan <strong>KRI</strong>, dan integriti halangan <strong>Bowtie</strong>.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-2 shrink-0">
+            <button
+              onClick={() => setActiveTab('emv')}
+              className="text-xs px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition"
+            >
+              Lihat Model EMV &rarr;
+            </button>
+          </div>
+        </div>
+
+        {/* 4 Quantitative Financial Metrics (EMV, Net Savings, VaR, KRI Alerts) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          {/* Card 1: Expected Monetary Value (EMV) Reduction */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm relative overflow-hidden">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Nilai Jangkaan Kerugian (EMV)</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-2xl font-black text-emerald-400">
+                    {formatRM(portfolioMetrics.totalResidualEMV)}
+                  </span>
+                  <span className="text-xs text-slate-400">residual</span>
+                </div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span className="text-slate-400">Inherent EMV Asal:</span>
+              <span className="font-semibold text-rose-300">{formatRM(portfolioMetrics.totalInherentEMV)}</span>
+            </div>
+          </div>
+
+          {/* Card 2: Return on Mitigation Investment (RoMI) */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm relative overflow-hidden">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Pulangan Bersih Mitigasi (RoMI)</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-2xl font-black text-teal-300">
+                    +{portfolioMetrics.returnOnMitigation.toFixed(0)}%
+                  </span>
+                  <span className="text-xs text-slate-400">ROI risiko</span>
+                </div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                <TrendingUp className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span className="text-slate-400">Penjimatan Bersih:</span>
+              <span className="font-semibold text-emerald-400">{formatRM(portfolioMetrics.netSavings)}</span>
+            </div>
+          </div>
+
+          {/* Card 3: 95% 1-Month Value at Risk (VaR) */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm relative overflow-hidden">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Agregat 95% Value at Risk (VaR)</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-2xl font-black text-amber-300">
+                    {formatRM(portfolioMetrics.portfolioVaR95)}
+                  </span>
+                </div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                <DollarSign className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span className="text-slate-400">Had Selera Risiko Agromakanan:</span>
+              <span className="font-semibold text-emerald-400">Siling RM10.0M</span>
+            </div>
+          </div>
+
+          {/* Card 4: Key Risk Indicators Health */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm relative overflow-hidden">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Integriti Operasi (KRI Telemetri)</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-2xl font-black text-white">{kris.length} Metrik</span>
+                  <span className="text-xs text-amber-400 font-medium">({portfolioMetrics.warningKri} Amaran)</span>
+                </div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                <Gauge className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span className="text-slate-400">Status Semasa:</span>
+              <span className="font-semibold text-amber-300">
+                {portfolioMetrics.criticalKri > 0 ? 'Tindakan Segera' : 'Dalam Pengawasan Rapi'}
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        {/* TAB 1: OVERVIEW & COMPARISON */}
+        {activeTab === 'overview' && (
+          <div className="space-y-6 animate-fadeIn">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              
+              {/* EMV Inherent vs Residual Chart */}
+              <div className="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <div>
+                    <h2 className="text-sm font-bold text-white flex items-center gap-2">
+                      <TrendingDown className="w-4 h-4 text-emerald-400" />
+                      Analisis Nilai Jangkaan Kerugian (EMV = Kebarangkalian &times; Kerugian Bersih)
+                    </h2>
+                    <p className="text-xs text-slate-400">
+                      Pengurangan pendedahan kewangan (Inherent EMV vs Residual EMV) selepas pelaburan kawalan mitigasi FAMA (dalam '000 RM)
+                    </p>
+                  </div>
+                  <span className="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    Nilai Empirikal Kewangan
+                  </span>
+                </div>
+
+                <div className="h-64 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={emvComparisonData} margin={{ top: 15, right: 15, left: 10, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
+                      <XAxis dataKey="name" stroke="#64748b" fontSize={11} />
+                      <YAxis stroke="#64748b" fontSize={11} tickFormatter={(val) => `RM${val}k`} />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px' }}
+                        formatter={(val: any, name: any) => [`RM ${Number(val).toLocaleString()},000`, name === 'InherentEMV' ? 'Inherent EMV' : name === 'ResidualEMV' ? 'Residual EMV' : 'Kos Mitigasi']}
+                      />
+                      <Legend />
+                      <Bar dataKey="InherentEMV" name="Inherent EMV (Tanpa Kawalan)" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="ResidualEMV" name="Residual EMV (Selepas Kawalan)" fill="#10b981" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="MitigasiCost" name="Kos Pelaburan Mitigasi" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* KRI Quick Status Feed */}
+              <div className="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                      <Gauge className="w-4 h-4 text-teal-400" />
+                      Status KRI Masa-Nyata
+                    </h3>
+                    <button
+                      onClick={() => setActiveTab('kri')}
+                      className="text-xs text-emerald-400 hover:underline"
+                    >
+                      Buka Papan Penuh &rarr;
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {kris.map((kri) => (
+                      <div
+                        key={kri.id}
+                        className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between"
+                      >
+                        <div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono text-[10px] text-slate-500">{kri.id}</span>
+                            <span className="text-xs font-semibold text-slate-200 truncate max-w-[180px]">
+                              {kri.name}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            Semasa: <span className="font-bold text-white">{kri.currentValue} {kri.unit}</span>
+                          </p>
+                        </div>
+                        <span
+                          className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
+                            kri.status === 'GREEN'
+                              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                              : kri.status === 'AMBER'
+                              ? 'bg-amber-500/10 text-amber-300 border border-amber-500/30'
+                              : 'bg-rose-500/10 text-rose-400 border border-rose-500/30 animate-pulse'
+                          }`}
+                        >
+                          {kri.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+                  <span>Audit Kekerapan:</span>
+                  <span className="font-mono text-emerald-400">Automasi Telemetri IoT</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Side-by-side Table Comparison: Traditional Matrix vs Modern Practice */}
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+              <h3 className="text-sm font-bold text-white mb-3">
+                Perbandingan Metodologi: Matriks Risiko Tradisional vs. Pengukuran Industri Kuantitatif
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-950 text-slate-400 uppercase font-semibold border-b border-slate-800">
+                    <tr>
+                      <th className="py-2.5 px-3">Ciri &amp; Dimensi</th>
+                      <th className="py-2.5 px-3 text-rose-300">Matriks Tradisional (5&times;5)</th>
+                      <th className="py-2.5 px-3 text-emerald-300">Pengukuran Industri (EMV, VaR, KRI, Bowtie)</th>
+                      <th className="py-2.5 px-3">Faedah Langsung untuk FAMA</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800 text-slate-300">
+                    <tr>
+                      <td className="py-2.5 px-3 font-semibold text-white">Unit Pengukuran</td>
+                      <td className="py-2.5 px-3 text-slate-400">Skor arbituari tanpa unit (1 hingga 25)</td>
+                      <td className="py-2.5 px-3 text-emerald-400 font-semibold">Ringgit Malaysia (RM), %, Minit, Hari</td>
+                      <td className="py-2.5 px-3">Kewangan &amp; Lembaga Pengarah faham impak sebenar.</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 px-3 font-semibold text-white">Agregasi Seluruh Portfolio</td>
+                      <td className="py-2.5 px-3 text-slate-400">Gagal (skor matriks tidak boleh dicampurkan)</td>
+                      <td className="py-2.5 px-3 text-emerald-400 font-semibold">Boleh dijumlahkan terus (Jumlah EMV &amp; VaR)</td>
+                      <td className="py-2.5 px-3">Mengetahui jumlah pendedahan kewangan kebangsaan FAMA.</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 px-3 font-semibold text-white">Justifikasi Belanjawan Mitigasi</td>
+                      <td className="py-2.5 px-3 text-slate-400">Sukar menentukan ROI kos intervensi</td>
+                      <td className="py-2.5 px-3 text-emerald-400 font-semibold">Pengiraan RoMI (Return on Mitigation Investment)</td>
+                      <td className="py-2.5 px-3">Membuktikan kos memasang sensor IoT berbaloi melindungi stok.</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 px-3 font-semibold text-white">Kekerapan &amp; Pengesanan</td>
+                      <td className="py-2.5 px-3 text-slate-400">Semakan manual tahunan / suku tahunan</td>
+                      <td className="py-2.5 px-3 text-emerald-400 font-semibold">Masa nyata menerusi ambang amaran KRI</td>
+                      <td className="py-2.5 px-3">Pencegahan serta-merta sebelum hasil sayur/durian rosak.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: EXPECTED MONETARY VALUE & VALUE AT RISK */}
+        {activeTab === 'emv' && (
+          <div className="space-y-6 animate-fadeIn">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <div>
+                  <h2 className="text-base font-bold text-white flex items-center gap-2">
+                    <DollarSign className="w-5 h-5 text-emerald-400" />
+                    Model Kuantitatif: Expected Monetary Value (EMV) &amp; 95% Value at Risk (VaR)
+                  </h2>
+                  <p className="text-xs text-slate-400">
+                    Formula Piawaian: EMV = Kebarangkalian (P) &times; Potensi Kerugian (C) | RoMI = (EMV Diselamatkan - Kos Mitigasi) / Kos Mitigasi
+                  </p>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs text-slate-400 block">Jumlah EMV Diselamatkan:</span>
+                  <span className="text-lg font-black text-emerald-400">{formatRM(portfolioMetrics.emvReduction)}</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {risks.map((r) => {
+                  const inherentEMV = r.probInherent * r.lossInherentRM;
+                  const residualEMV = r.probResidual * r.lossResidualRM;
+                  const savedEMV = inherentEMV - residualEMV;
+                  const netGain = savedEMV - r.mitigationCostRM;
+                  const romi = (netGain / r.mitigationCostRM) * 100;
+
+                  return (
+                    <div
+                      key={r.id}
+                      className="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 transition flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-xs text-emerald-400 font-bold">{r.id}</span>
+                          <span className="text-[11px] text-slate-400">{r.category.split('&')[0]}</span>
+                        </div>
+                        <h4 className="text-xs font-bold text-slate-100 mt-1 line-clamp-2">{r.title}</h4>
+
+                        {/* Comparative Cards */}
+                        <div className="grid grid-cols-2 gap-2 mt-3 text-xs">
+                          <div className="p-2 rounded bg-slate-900 border border-rose-500/20">
+                            <span className="text-[10px] text-rose-400 block uppercase font-semibold">Inherent EMV</span>
+                            <span className="font-bold text-white">{formatRM(inherentEMV)}</span>
+                            <span className="text-[10px] text-slate-400 block mt-0.5">
+                              (P: {formatPercent(r.probInherent)} &times; {formatRM(r.lossInherentRM)})
+                            </span>
+                          </div>
+
+                          <div className="p-2 rounded bg-slate-900 border border-emerald-500/20">
+                            <span className="text-[10px] text-emerald-400 block uppercase font-semibold">Residual EMV</span>
+                            <span className="font-bold text-emerald-300">{formatRM(residualEMV)}</span>
+                            <span className="text-[10px] text-slate-400 block mt-0.5">
+                              (P: {formatPercent(r.probResidual)} &times; {formatRM(r.lossResidualRM)})
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Financial Efficiency */}
+                        <div className="mt-3 space-y-1.5 text-xs text-slate-300">
+                          <div className="flex justify-between">
+                            <span className="text-slate-400">Kos Pelaburan Mitigasi:</span>
+                            <span className="font-mono text-slate-200">{formatRM(r.mitigationCostRM)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-400">95% Value at Risk (VaR):</span>
+                            <span className="font-mono text-amber-300">{formatRM(r.confidenceVaR95)}</span>
+                          </div>
+                          <div className="flex justify-between font-semibold">
+                            <span className="text-emerald-400">Pulangan Mitigasi (RoMI):</span>
+                            <span className="text-emerald-400 font-bold">+{romi.toFixed(0)}%</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => setSelectedRisk(r)}
+                        className="mt-4 w-full py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-slate-200 border border-slate-700 transition"
+                      >
+                        Buka Analisis Bowtie &amp; Kawalan &rarr;
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 3: KEY RISK INDICATORS TELEMETRY */}
+        {activeTab === 'kri' && (
+          <div className="space-y-6 animate-fadeIn">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <div>
+                  <h2 className="text-base font-bold text-white flex items-center gap-2">
+                    <Gauge className="w-5 h-5 text-teal-400" />
+                    Sistem Penunjuk Risiko Utama Masa-Nyata (KRI Telemetri FAMA)
+                  </h2>
+                  <p className="text-xs text-slate-400">
+                    Pemantauan berterusan dengan ambang pencetus automatik (Hijau: Terkawal &bull; Kuning: Amaran Sedia &bull; Merah: Tindak Balas Kecemasan)
+                  </p>
+                </div>
+                <button
+                  onClick={handleSimulateTelemetry}
+                  className="px-3.5 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-500 text-xs font-semibold text-white shadow transition flex items-center gap-2"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isTelemetrySimulating ? 'animate-spin' : ''}`} />
+                  Uji Pencetus Sensor IoT
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {kris.map((kri) => {
+                  return (
+                    <div
+                      key={kri.id}
+                      className="p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-4"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-900 text-teal-400 font-bold border border-slate-800">
+                              {kri.id}
+                            </span>
+                            <span className="text-xs text-slate-400">{kri.category}</span>
+                          </div>
+                          <h3 className="text-sm font-bold text-white mt-1">{kri.name}</h3>
+                        </div>
+
+                        <span
+                          className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${
+                            kri.status === 'GREEN'
+                              ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                              : kri.status === 'AMBER'
+                              ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
+                              : 'bg-rose-500/15 text-rose-400 border border-rose-500/30 animate-pulse'
+                          }`}
+                        >
+                          {kri.status}
+                        </span>
+                      </div>
+
+                      {/* Big Telemetry Value */}
+                      <div className="flex items-baseline gap-2 bg-slate-900 p-3 rounded-lg border border-slate-800">
+                        <span className="text-3xl font-black text-white">{kri.currentValue}</span>
+                        <span className="text-xs text-slate-400 font-medium">{kri.unit}</span>
+                      </div>
+
+                      {/* Threshold Gauge Display */}
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between text-slate-400">
+                          <span>Ambang Selamat (Hijau): &le; {kri.greenLimit}</span>
+                          <span>Ambang Amaran (Kuning): &gt; {kri.greenLimit}</span>
+                          <span>Ambang Kecemasan (Merah): &gt; {kri.amberLimit}</span>
+                        </div>
+                        <div className="w-full bg-slate-900 rounded-full h-2.5 flex overflow-hidden border border-slate-800">
+                          <div className="bg-emerald-500 h-full w-1/3" title="Zon Hijau"></div>
+                          <div className="bg-amber-500 h-full w-1/3" title="Zon Amaran"></div>
+                          <div className="bg-rose-500 h-full w-1/3" title="Zon Bahaya"></div>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-slate-300 leading-relaxed">{kri.description}</p>
+
+                      <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>Frekuensi: {kri.frequency}</span>
+                        <span>{kri.lastUpdate}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: BOWTIE BARRIER MANAGEMENT */}
+        {activeTab === 'bowtie' && (
+          <div className="space-y-6 animate-fadeIn">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div>
+                  <h2 className="text-base font-bold text-white flex items-center gap-2">
+                    <ShieldAlert className="w-5 h-5 text-indigo-400" />
+                    Model Pengurusan Halangan Bowtie (Barrier Integrity Management)
+                  </h2>
+                  <p className="text-xs text-slate-400">
+                    Memetakan laluan pencegahan sebelum insiden (Preventive Barriers) dan laluan mitigasi pemulihan selepas insiden (Mitigating Barriers)
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {risks.map((r) => (
+                  <div key={r.id} className="p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-900 text-indigo-400 font-bold border border-slate-800">
+                          {r.id}
+                        </span>
+                        <h3 className="text-sm font-bold text-white">{r.title}</h3>
+                      </div>
+                      <span className="text-xs text-emerald-400 font-semibold">{r.category}</span>
+                    </div>
+
+                    {/* Bowtie Diagram Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-11 gap-3 items-center text-xs">
+                      {/* Left: Hazard / Threats & Preventive Barriers */}
+                      <div className="lg:col-span-4 bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-2">
+                        <span className="text-[10px] font-bold text-rose-400 uppercase tracking-wider block">
+                          [ Ancaman / Punca ] &rarr; Halangan Pencegahan
+                        </span>
+                        <p className="text-slate-300 font-medium text-xs">{r.bowtie.hazard}</p>
+                        <div className="space-y-1.5 pt-1">
+                          {r.bowtie.preventiveBarriers.map((bar, i) => (
+                            <div key={i} className="flex items-center gap-2 text-slate-200 bg-slate-950 p-1.5 rounded border border-slate-800">
+                              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                              <span className="text-[11px]">{bar}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Center: Top Event */}
+                      <div className="lg:col-span-3 bg-gradient-to-br from-indigo-950/80 to-slate-900 p-4 rounded-xl border border-indigo-500/40 text-center shadow-lg">
+                        <AlertTriangle className="w-6 h-6 text-amber-400 mx-auto mb-1" />
+                        <span className="text-[10px] font-bold text-amber-300 uppercase block">Peristiwa Utama (Top Event)</span>
+                        <p className="text-xs font-bold text-white mt-1 leading-snug">{r.bowtie.topEvent}</p>
+                      </div>
+
+                      {/* Right: Mitigating Barriers & Consequences */}
+                      <div className="lg:col-span-4 bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-2">
+                        <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block">
+                          Halangan Mitigasi &rarr; [ Kawalan Kerugian ]
+                        </span>
+                        <div className="space-y-1.5">
+                          {r.bowtie.mitigationBarriers.map((bar, i) => (
+                            <div key={i} className="flex items-center gap-2 text-slate-200 bg-slate-950 p-1.5 rounded border border-slate-800">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
+                              <span className="text-[11px]">{bar}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="pt-2 border-t border-slate-800 flex justify-between text-[11px]">
+                          <span className="text-slate-400">Had Residual:</span>
+                          <span className="font-bold text-emerald-400">{formatRM(r.lossResidualRM)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 5: QUANTITATIVE RISK REGISTER */}
+        {activeTab === 'register' && (
+          <div className="bg-slate-900 border border-slate-800 rounded-xl shadow-sm overflow-hidden animate-fadeIn">
+            <div className="p-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-bold text-white">Daftar Risiko Kuantitatif FAMA</h2>
+                <span className="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full border border-slate-700">
+                  {filteredRisks.length} rekod berangka
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Cari tajuk, kod QRA, pegawai..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-8 pr-3 py-1.5 text-xs bg-slate-950 border border-slate-800 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 w-56 sm:w-60"
+                  />
+                </div>
+
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="py-1.5 px-2.5 text-xs bg-slate-950 border border-slate-800 rounded-lg text-slate-200 focus:outline-none focus:border-emerald-500"
+                >
+                  <option value="All">Semua Kategori</option>
+                  {CATEGORIES.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-950/70 text-slate-400 uppercase font-semibold border-b border-slate-800 tracking-wider">
+                  <tr>
+                    <th className="py-3 px-4">Kod &amp; Inisiatif FAMA</th>
+                    <th className="py-3 px-4">Kebarangkalian (P)</th>
+                    <th className="py-3 px-4">Inherent EMV (RM)</th>
+                    <th className="py-3 px-4">Residual EMV (RM)</th>
+                    <th className="py-3 px-4">Pelaburan Mitigasi</th>
+                    <th className="py-3 px-4">95% VaR (RM)</th>
+                    <th className="py-3 px-4">Kemajuan</th>
+                    <th className="py-3 px-4 text-right">Butiran</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y border-slate-800/60 divide-slate-800/60">
+                  {filteredRisks.map((risk) => {
+                    const inherentEMV = risk.probInherent * risk.lossInherentRM;
+                    const residualEMV = risk.probResidual * risk.lossResidualRM;
+
+                    return (
+                      <tr
+                        key={risk.id}
+                        onClick={() => setSelectedRisk(risk)}
+                        className="hover:bg-slate-800/40 transition cursor-pointer group"
+                      >
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-emerald-400 font-bold">{risk.id}</span>
+                            <span className="font-semibold text-slate-200 group-hover:text-emerald-300 line-clamp-1">
+                              {risk.title}
+                            </span>
+                          </div>
+                          <span className="text-[11px] text-slate-400">{risk.owner}</span>
+                        </td>
+
+                        <td className="py-3 px-4">
+                          <span className="text-slate-300">
+                            {formatPercent(risk.probResidual)} <span className="text-slate-500 text-[10px]">(asal {formatPercent(risk.probInherent)})</span>
+                          </span>
+                        </td>
+
+                        <td className="py-3 px-4 font-mono text-rose-300 font-medium">
+                          {formatRM(inherentEMV)}
+                        </td>
+
+                        <td className="py-3 px-4 font-mono text-emerald-400 font-bold">
+                          {formatRM(residualEMV)}
+                        </td>
+
+                        <td className="py-3 px-4 font-mono text-slate-300">
+                          {formatRM(risk.mitigationCostRM)}
+                        </td>
+
+                        <td className="py-3 px-4 font-mono text-amber-300 font-medium">
+                          {formatRM(risk.confidenceVaR95)}
+                        </td>
+
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                              <div
+                                className="h-full bg-emerald-500 rounded-full"
+                                style={{ width: `${risk.progress}%` }}
+                              ></div>
+                            </div>
+                            <span className="text-[11px] font-mono text-slate-400">{risk.progress}%</span>
+                          </div>
+                        </td>
+
+                        <td className="py-3 px-4 text-right">
+                          <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white inline-block transition transform group-hover:translate-x-0.5" />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+      </main>
+
+      {/* Detail Inspection Drawer for Quantitative Risk */}
+      {selectedRisk && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex justify-end animate-fadeIn">
+          <div className="w-full max-w-xl bg-slate-900 border-l border-slate-800 h-full overflow-y-auto p-6 flex flex-col justify-between shadow-2xl">
+            <div className="space-y-6">
+              {/* Header */}
+              <div className="flex items-start justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-800 text-emerald-400 font-bold border border-slate-700">
+                      {selectedRisk.id}
+                    </span>
+                    <span className="text-xs text-slate-400">{selectedRisk.category}</span>
+                  </div>
+                  <h3 className="text-base font-bold text-white mt-1.5 leading-snug">{selectedRisk.title}</h3>
+                </div>
+                <button
+                  onClick={() => setSelectedRisk(null)}
+                  className="p-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* EMV Quantitative Card */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+                  <span className="text-[10px] text-rose-400 block uppercase font-bold">Inherent Loss &amp; EMV</span>
+                  <div className="text-lg font-black text-white mt-1">
+                    {formatRM(selectedRisk.probInherent * selectedRisk.lossInherentRM)}
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Kebarangkalian: {formatPercent(selectedRisk.probInherent)} &bull; Kerugian Bersih: {formatRM(selectedRisk.lossInherentRM)}
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/30">
+                  <span className="text-[10px] text-emerald-400 block uppercase font-bold">Residual Loss &amp; EMV</span>
+                  <div className="text-lg font-black text-emerald-300 mt-1">
+                    {formatRM(selectedRisk.probResidual * selectedRisk.lossResidualRM)}
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Kebarangkalian: {formatPercent(selectedRisk.probResidual)} &bull; Kerugian Bersih: {formatRM(selectedRisk.lossResidualRM)}
+                  </p>
+                </div>
+              </div>
+
+              {/* Governance & Bowtie Summary */}
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3 text-xs">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Pegawai Pemilik:</span>
+                  <span className="text-slate-200 font-semibold">{selectedRisk.owner}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Kos Pelaburan Mitigasi:</span>
+                  <span className="text-teal-400 font-bold">{formatRM(selectedRisk.mitigationCostRM)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">95% Value at Risk (VaR):</span>
+                  <span className="text-amber-300 font-bold">{formatRM(selectedRisk.confidenceVaR95)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Status Tindakan:</span>
+                  <span className="text-emerald-400 font-semibold">{selectedRisk.status} ({selectedRisk.progress}%)</span>
+                </div>
+              </div>
+
+              {/* Bowtie Preventive Barriers */}
+              <div>
+                <h4 className="text-xs uppercase font-bold text-emerald-400 tracking-wider mb-2 flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4" /> Halangan Pencegahan (Preventive Barriers)
+                </h4>
+                <div className="space-y-1.5">
+                  {selectedRisk.bowtie.preventiveBarriers.map((bar, i) => (
+                    <div key={i} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-300">
+                      &bull; {bar}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bowtie Recovery Barriers */}
+              <div>
+                <h4 className="text-xs uppercase font-bold text-teal-400 tracking-wider mb-2 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4" /> Halangan Pemulihan (Mitigating Barriers)
+                </h4>
+                <div className="space-y-1.5">
+                  {selectedRisk.bowtie.mitigationBarriers.map((bar, i) => (
+                    <div key={i} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-300">
+                      &bull; {bar}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-slate-800">
+              <button
+                onClick={() => setSelectedRisk(null)}
+                className="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition"
+              >
+                Tutup Paparan Analisis
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Persistent Bottom Navigation Menu */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 shadow-2xl px-4 py-2">
+        <div className="max-w-md mx-auto flex items-center justify-around">
+          
+          <button
+            onClick={() => setActiveTab('overview')}
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+              activeTab === 'overview'
+                ? 'text-emerald-400 bg-emerald-500/10'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <LayoutDashboard className="w-5 h-5" />
+            <span className="text-[11px]">Ringkasan</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('emv')}
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+              activeTab === 'emv'
+                ? 'text-emerald-400 bg-emerald-500/10'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <DollarSign className="w-5 h-5" />
+            <span className="text-[11px]">Model EMV</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('kri')}
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+              activeTab === 'kri'
+                ? 'text-emerald-400 bg-emerald-500/10'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Gauge className="w-5 h-5" />
+            <span className="text-[11px]">KRI Telemetri</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('bowtie')}
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+              activeTab === 'bowtie'
+                ? 'text-emerald-400 bg-emerald-500/10'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <ShieldAlert className="w-5 h-5" />
+            <span className="text-[11px]">Bowtie</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('register')}
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+              activeTab === 'register'
+                ? 'text-emerald-400 bg-emerald-500/10'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Sliders className="w-5 h-5" />
+            <span className="text-[11px]">Daftar Kuantitatif</span>
+          </button>
+
+        </div>
+      </nav>
+    </div>
+  );
+}
