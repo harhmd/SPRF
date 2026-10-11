@@ -441,21 +441,21 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-white pb-24">
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans selection:bg-emerald-600 selection:text-white pb-24">
       {/* Top Header Bar */}
-      <header className="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-30 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      <header className="border-b border-emerald-100 bg-white/95 backdrop-blur-md sticky top-0 z-30 px-6 py-4 flex flex-wrap items-center justify-between gap-4 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-emerald-600/20">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-emerald-700 to-green-700 flex items-center justify-center shadow-md shadow-emerald-700/20 text-white">
             <Activity className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            <h1 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
               SPRF &bull; FAMA Malaysia
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200">
                 Pengukuran Risiko Kuantitatif (EMV &bull; KRI &bull; VaR)
               </span>
             </h1>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Transformasi Metodologi: Menggantikan Matriks Subjektif 5&times;5 dengan Piawaian Industri Empirikal
             </p>
           </div>
@@ -464,15 +464,15 @@ export default function App() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleSimulateTelemetry}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 transition"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 border border-slate-200 shadow-sm transition active:scale-95"
             title="Kemas kini bacaan sensor IoT secara rawak"
           >
-            <RefreshCw className={`w-3.5 h-3.5 text-teal-400 ${isTelemetrySimulating ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 text-emerald-600 ${isTelemetrySimulating ? 'animate-spin' : ''}`} />
             Simulasi KRI Masa-Nyata
           </button>
           <button
             onClick={exportQuantCSV}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white shadow-md shadow-emerald-600/30 transition transform active:scale-95"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-xs font-semibold text-white shadow-sm shadow-emerald-600/30 transition transform active:scale-95"
           >
             <FileSpreadsheet className="w-4 h-4" />
             Eksport Laporan Kuantitatif
@@ -484,16 +484,16 @@ export default function App() {
       <main className="flex-1 p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6">
         
         {/* Why Industry Replaced 5x5 Matrix Banner */}
-        <div className="p-4 rounded-xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mt-0.5">
+        <div className="p-5 rounded-2xl bg-gradient-to-r from-emerald-50 via-white to-green-50/60 border border-emerald-200/90 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="p-2.5 rounded-xl bg-emerald-600/10 text-emerald-700 border border-emerald-200 mt-0.5 shrink-0">
               <Info className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white">
+              <h3 className="text-sm font-bold text-slate-900">
                 Mengapa Pengukuran Kuantitatif Menggantikan Matriks Tradisional 5&times;5?
               </h3>
-              <p className="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
+              <p className="text-xs text-slate-600 mt-1 max-w-3xl leading-relaxed">
                 Matriks kualitatif mengalami masalah <em>Range Compression</em> (menyamakan kerugian RM50k dan RM5M) serta skor yang tidak boleh dijumlahkan. Metodologi industri mengukur <strong>Expected Monetary Value (EMV)</strong>, had pendedahan <strong>Value at Risk (95% VaR)</strong>, telemetri berterusan <strong>KRI</strong>, dan integriti halangan <strong>Bowtie</strong>.
               </p>
             </div>
@@ -501,7 +501,7 @@ export default function App() {
           <div className="flex gap-2 shrink-0">
             <button
               onClick={() => setActiveTab('emv')}
-              className="text-xs px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition"
+              className="text-xs px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-medium shadow-sm transition"
             >
               Lihat Model EMV &rarr;
             </button>
@@ -512,87 +512,87 @@ export default function App() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
           {/* Card 1: Expected Monetary Value (EMV) Reduction */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm relative overflow-hidden">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:shadow-md transition relative overflow-hidden">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Nilai Jangkaan Kerugian (EMV)</p>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-2xl font-black text-emerald-400">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Nilai Jangkaan Kerugian (EMV)</p>
+                <div className="flex items-baseline gap-2 mt-1.5">
+                  <span className="text-2xl font-black text-emerald-700">
                     {formatRM(portfolioMetrics.totalResidualEMV)}
                   </span>
-                  <span className="text-xs text-slate-400">residual</span>
+                  <span className="text-xs font-medium text-slate-500">residual</span>
                 </div>
               </div>
-              <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200">
                 <ShieldCheck className="w-5 h-5" />
               </div>
             </div>
-            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Inherent EMV Asal:</span>
-              <span className="font-semibold text-rose-300">{formatRM(portfolioMetrics.totalInherentEMV)}</span>
+            <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span className="text-slate-500 font-medium">Inherent EMV Asal:</span>
+              <span className="font-bold text-rose-600">{formatRM(portfolioMetrics.totalInherentEMV)}</span>
             </div>
           </div>
 
           {/* Card 2: Return on Mitigation Investment (RoMI) */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm relative overflow-hidden">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:shadow-md transition relative overflow-hidden">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Pulangan Bersih Mitigasi (RoMI)</p>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-2xl font-black text-teal-300">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Pulangan Bersih Mitigasi (RoMI)</p>
+                <div className="flex items-baseline gap-2 mt-1.5">
+                  <span className="text-2xl font-black text-emerald-700">
                     +{portfolioMetrics.returnOnMitigation.toFixed(0)}%
                   </span>
-                  <span className="text-xs text-slate-400">ROI risiko</span>
+                  <span className="text-xs font-medium text-slate-500">ROI risiko</span>
                 </div>
               </div>
-              <div className="p-2.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">
+              <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
                 <TrendingUp className="w-5 h-5" />
               </div>
             </div>
-            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Penjimatan Bersih:</span>
-              <span className="font-semibold text-emerald-400">{formatRM(portfolioMetrics.netSavings)}</span>
+            <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span className="text-slate-500 font-medium">Penjimatan Bersih:</span>
+              <span className="font-bold text-emerald-700">{formatRM(portfolioMetrics.netSavings)}</span>
             </div>
           </div>
 
           {/* Card 3: 95% 1-Month Value at Risk (VaR) */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm relative overflow-hidden">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:shadow-md transition relative overflow-hidden">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Agregat 95% Value at Risk (VaR)</p>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-2xl font-black text-amber-300">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Agregat 95% Value at Risk (VaR)</p>
+                <div className="flex items-baseline gap-2 mt-1.5">
+                  <span className="text-2xl font-black text-amber-600">
                     {formatRM(portfolioMetrics.portfolioVaR95)}
                   </span>
                 </div>
               </div>
-              <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 border border-amber-200">
                 <DollarSign className="w-5 h-5" />
               </div>
             </div>
-            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Had Selera Risiko Agromakanan:</span>
-              <span className="font-semibold text-emerald-400">Siling RM10.0M</span>
+            <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span className="text-slate-500 font-medium">Had Selera Risiko Agromakanan:</span>
+              <span className="font-bold text-emerald-700">Siling RM10.0M</span>
             </div>
           </div>
 
           {/* Card 4: Key Risk Indicators Health */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm relative overflow-hidden">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:shadow-md transition relative overflow-hidden">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Integriti Operasi (KRI Telemetri)</p>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-2xl font-black text-white">{kris.length} Metrik</span>
-                  <span className="text-xs text-amber-400 font-medium">({portfolioMetrics.warningKri} Amaran)</span>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Integriti Operasi (KRI Telemetri)</p>
+                <div className="flex items-baseline gap-2 mt-1.5">
+                  <span className="text-2xl font-black text-slate-900">{kris.length} Metrik</span>
+                  <span className="text-xs text-amber-700 font-semibold">({portfolioMetrics.warningKri} Amaran)</span>
                 </div>
               </div>
-              <div className="p-2.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+              <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
                 <Gauge className="w-5 h-5" />
               </div>
             </div>
-            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Status Semasa:</span>
-              <span className="font-semibold text-amber-300">
+            <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span className="text-slate-500 font-medium">Status Semasa:</span>
+              <span className="font-bold text-amber-700">
                 {portfolioMetrics.criticalKri > 0 ? 'Tindakan Segera' : 'Dalam Pengawasan Rapi'}
               </span>
             </div>
@@ -606,18 +606,18 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               
               {/* EMV Inherent vs Residual Chart */}
-              <div className="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+              <div className="lg:col-span-8 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                   <div>
-                    <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                      <TrendingDown className="w-4 h-4 text-emerald-400" />
+                    <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      <TrendingDown className="w-4 h-4 text-emerald-600" />
                       Analisis Nilai Jangkaan Kerugian (EMV = Kebarangkalian &times; Kerugian Bersih)
                     </h2>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-slate-500 mt-0.5">
                       Pengurangan pendedahan kewangan (Inherent EMV vs Residual EMV) selepas pelaburan kawalan mitigasi FAMA (dalam '000 RM)
                     </p>
                   </div>
-                  <span className="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span className="text-[11px] px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200">
                     Nilai Empirikal Kewangan
                   </span>
                 </div>
@@ -625,33 +625,33 @@ export default function App() {
                 <div className="h-64 w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={emvComparisonData} margin={{ top: 15, right: 15, left: 10, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-                      <XAxis dataKey="name" stroke="#64748b" fontSize={11} />
-                      <YAxis stroke="#64748b" fontSize={11} tickFormatter={(val) => `RM${val}k`} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                      <XAxis dataKey="name" stroke="#64748b" fontSize={11} tickLine={false} />
+                      <YAxis stroke="#64748b" fontSize={11} tickLine={false} tickFormatter={(val) => `RM${val}k`} />
                       <Tooltip
-                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px' }}
+                        contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
                         formatter={(val: any, name: any) => [`RM ${Number(val).toLocaleString()},000`, name === 'InherentEMV' ? 'Inherent EMV' : name === 'ResidualEMV' ? 'Residual EMV' : 'Kos Mitigasi']}
                       />
                       <Legend />
-                      <Bar dataKey="InherentEMV" name="Inherent EMV (Tanpa Kawalan)" fill="#f43f5e" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="ResidualEMV" name="Residual EMV (Selepas Kawalan)" fill="#10b981" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="MitigasiCost" name="Kos Pelaburan Mitigasi" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="InherentEMV" name="Inherent EMV (Tanpa Kawalan)" fill="#ef4444" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="ResidualEMV" name="Residual EMV (Selepas Kawalan)" fill="#10b981" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="MitigasiCost" name="Kos Pelaburan Mitigasi" fill="#3b82f6" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
               {/* KRI Quick Status Feed */}
-              <div className="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+              <div className="lg:col-span-4 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                      <Gauge className="w-4 h-4 text-teal-400" />
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      <Gauge className="w-4 h-4 text-emerald-600" />
                       Status KRI Masa-Nyata
                     </h3>
                     <button
                       onClick={() => setActiveTab('kri')}
-                      className="text-xs text-emerald-400 hover:underline"
+                      className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
                     >
                       Buka Papan Penuh &rarr;
                     </button>
@@ -660,26 +660,28 @@ export default function App() {
                     {kris.map((kri) => (
                       <div
                         key={kri.id}
-                        className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between"
+                        className="p-3.5 rounded-xl bg-slate-50/80 hover:bg-slate-50 border border-slate-200/80 transition flex items-center justify-between"
                       >
                         <div>
                           <div className="flex items-center gap-1.5">
-                            <span className="font-mono text-[10px] text-slate-500">{kri.id}</span>
-                            <span className="text-xs font-semibold text-slate-200 truncate max-w-[180px]">
+                            <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white text-slate-600 font-semibold border border-slate-200">
+                              {kri.id}
+                            </span>
+                            <span className="text-xs font-semibold text-slate-800 truncate max-w-[170px]">
                               {kri.name}
                             </span>
                           </div>
-                          <p className="text-[11px] text-slate-400 mt-0.5">
-                            Semasa: <span className="font-bold text-white">{kri.currentValue} {kri.unit}</span>
+                          <p className="text-[11px] text-slate-500 mt-1">
+                            Semasa: <span className="font-bold text-slate-900">{kri.currentValue} {kri.unit}</span>
                           </p>
                         </div>
                         <span
-                          className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
+                          className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
                             kri.status === 'GREEN'
-                              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                               : kri.status === 'AMBER'
-                              ? 'bg-amber-500/10 text-amber-300 border border-amber-500/30'
-                              : 'bg-rose-500/10 text-rose-400 border border-rose-500/30 animate-pulse'
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                              : 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse'
                           }`}
                         >
                           {kri.status}
@@ -689,53 +691,53 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+                <div className="mt-4 pt-3.5 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between">
                   <span>Audit Kekerapan:</span>
-                  <span className="font-mono text-emerald-400">Automasi Telemetri IoT</span>
+                  <span className="font-mono text-emerald-700 font-semibold">Automasi Telemetri IoT</span>
                 </div>
               </div>
 
             </div>
 
             {/* Side-by-side Table Comparison: Traditional Matrix vs Modern Practice */}
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
-              <h3 className="text-sm font-bold text-white mb-3">
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+              <h3 className="text-sm font-bold text-slate-900 mb-3.5">
                 Perbandingan Metodologi: Matriks Risiko Tradisional vs. Pengukuran Industri Kuantitatif
               </h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-950 text-slate-400 uppercase font-semibold border-b border-slate-800">
+                  <thead className="bg-slate-50 text-slate-600 uppercase font-semibold border-b border-slate-200">
                     <tr>
-                      <th className="py-2.5 px-3">Ciri &amp; Dimensi</th>
-                      <th className="py-2.5 px-3 text-rose-300">Matriks Tradisional (5&times;5)</th>
-                      <th className="py-2.5 px-3 text-emerald-300">Pengukuran Industri (EMV, VaR, KRI, Bowtie)</th>
-                      <th className="py-2.5 px-3">Faedah Langsung untuk FAMA</th>
+                      <th className="py-3 px-4">Ciri &amp; Dimensi</th>
+                      <th className="py-3 px-4 text-rose-600">Matriks Tradisional (5&times;5)</th>
+                      <th className="py-3 px-4 text-emerald-700">Pengukuran Industri (EMV, VaR, KRI, Bowtie)</th>
+                      <th className="py-3 px-4">Faedah Langsung untuk FAMA</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800 text-slate-300">
-                    <tr>
-                      <td className="py-2.5 px-3 font-semibold text-white">Unit Pengukuran</td>
-                      <td className="py-2.5 px-3 text-slate-400">Skor arbituari tanpa unit (1 hingga 25)</td>
-                      <td className="py-2.5 px-3 text-emerald-400 font-semibold">Ringgit Malaysia (RM), %, Minit, Hari</td>
-                      <td className="py-2.5 px-3">Kewangan &amp; Lembaga Pengarah faham impak sebenar.</td>
+                  <tbody className="divide-y divide-slate-100 text-slate-700">
+                    <tr className="hover:bg-slate-50/60 transition">
+                      <td className="py-3 px-4 font-semibold text-slate-900">Unit Pengukuran</td>
+                      <td className="py-3 px-4 text-slate-500">Skor arbituari tanpa unit (1 hingga 25)</td>
+                      <td className="py-3 px-4 text-emerald-700 font-bold">Ringgit Malaysia (RM), %, Minit, Hari</td>
+                      <td className="py-3 px-4">Kewangan &amp; Lembaga Pengarah faham impak sebenar.</td>
                     </tr>
-                    <tr>
-                      <td className="py-2.5 px-3 font-semibold text-white">Agregasi Seluruh Portfolio</td>
-                      <td className="py-2.5 px-3 text-slate-400">Gagal (skor matriks tidak boleh dicampurkan)</td>
-                      <td className="py-2.5 px-3 text-emerald-400 font-semibold">Boleh dijumlahkan terus (Jumlah EMV &amp; VaR)</td>
-                      <td className="py-2.5 px-3">Mengetahui jumlah pendedahan kewangan kebangsaan FAMA.</td>
+                    <tr className="hover:bg-slate-50/60 transition">
+                      <td className="py-3 px-4 font-semibold text-slate-900">Agregasi Seluruh Portfolio</td>
+                      <td className="py-3 px-4 text-slate-500">Gagal (skor matriks tidak boleh dicampurkan)</td>
+                      <td className="py-3 px-4 text-emerald-700 font-bold">Boleh dijumlahkan terus (Jumlah EMV &amp; VaR)</td>
+                      <td className="py-3 px-4">Mengetahui jumlah pendedahan kewangan kebangsaan FAMA.</td>
                     </tr>
-                    <tr>
-                      <td className="py-2.5 px-3 font-semibold text-white">Justifikasi Belanjawan Mitigasi</td>
-                      <td className="py-2.5 px-3 text-slate-400">Sukar menentukan ROI kos intervensi</td>
-                      <td className="py-2.5 px-3 text-emerald-400 font-semibold">Pengiraan RoMI (Return on Mitigation Investment)</td>
-                      <td className="py-2.5 px-3">Membuktikan kos memasang sensor IoT berbaloi melindungi stok.</td>
+                    <tr className="hover:bg-slate-50/60 transition">
+                      <td className="py-3 px-4 font-semibold text-slate-900">Justifikasi Belanjawan Mitigasi</td>
+                      <td className="py-3 px-4 text-slate-500">Sukar menentukan ROI kos intervensi</td>
+                      <td className="py-3 px-4 text-emerald-700 font-bold">Pengiraan RoMI (Return on Mitigation Investment)</td>
+                      <td className="py-3 px-4">Membuktikan kos memasang sensor IoT berbaloi melindungi stok.</td>
                     </tr>
-                    <tr>
-                      <td className="py-2.5 px-3 font-semibold text-white">Kekerapan &amp; Pengesanan</td>
-                      <td className="py-2.5 px-3 text-slate-400">Semakan manual tahunan / suku tahunan</td>
-                      <td className="py-2.5 px-3 text-emerald-400 font-semibold">Masa nyata menerusi ambang amaran KRI</td>
-                      <td className="py-2.5 px-3">Pencegahan serta-merta sebelum hasil sayur/durian rosak.</td>
+                    <tr className="hover:bg-slate-50/60 transition">
+                      <td className="py-3 px-4 font-semibold text-slate-900">Kekerapan &amp; Pengesanan</td>
+                      <td className="py-3 px-4 text-slate-500">Semakan manual tahunan / suku tahunan</td>
+                      <td className="py-3 px-4 text-emerald-700 font-bold">Masa nyata menerusi ambang amaran KRI</td>
+                      <td className="py-3 px-4">Pencegahan serta-merta sebelum hasil sayur/durian rosak.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -747,24 +749,24 @@ export default function App() {
         {/* TAB 2: EXPECTED MONETARY VALUE & VALUE AT RISK */}
         {activeTab === 'emv' && (
           <div className="space-y-6 animate-fadeIn">
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
-              <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <div>
-                  <h2 className="text-base font-bold text-white flex items-center gap-2">
-                    <DollarSign className="w-5 h-5 text-emerald-400" />
+                  <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <DollarSign className="w-5 h-5 text-emerald-600" />
                     Model Kuantitatif: Expected Monetary Value (EMV) &amp; 95% Value at Risk (VaR)
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 mt-0.5">
                     Formula Piawaian: EMV = Kebarangkalian (P) &times; Potensi Kerugian (C) | RoMI = (EMV Diselamatkan - Kos Mitigasi) / Kos Mitigasi
                   </p>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs text-slate-400 block">Jumlah EMV Diselamatkan:</span>
-                  <span className="text-lg font-black text-emerald-400">{formatRM(portfolioMetrics.emvReduction)}</span>
+                  <span className="text-xs text-slate-500 block font-medium">Jumlah EMV Diselamatkan:</span>
+                  <span className="text-lg font-black text-emerald-700">{formatRM(portfolioMetrics.emvReduction)}</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {risks.map((r) => {
                   const inherentEMV = r.probInherent * r.lossInherentRM;
                   const residualEMV = r.probResidual * r.lossResidualRM;
@@ -775,54 +777,56 @@ export default function App() {
                   return (
                     <div
                       key={r.id}
-                      className="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 transition flex flex-col justify-between"
+                      className="p-5 rounded-2xl bg-white border border-slate-200/90 hover:border-emerald-400 hover:shadow-md transition flex flex-col justify-between shadow-sm"
                     >
                       <div>
                         <div className="flex items-center justify-between">
-                          <span className="font-mono text-xs text-emerald-400 font-bold">{r.id}</span>
-                          <span className="text-[11px] text-slate-400">{r.category.split('&')[0]}</span>
+                          <span className="font-mono text-xs text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                            {r.id}
+                          </span>
+                          <span className="text-[11px] text-slate-500 font-medium">{r.category.split('&')[0]}</span>
                         </div>
-                        <h4 className="text-xs font-bold text-slate-100 mt-1 line-clamp-2">{r.title}</h4>
+                        <h4 className="text-xs font-bold text-slate-900 mt-2.5 line-clamp-2 leading-relaxed">{r.title}</h4>
 
                         {/* Comparative Cards */}
-                        <div className="grid grid-cols-2 gap-2 mt-3 text-xs">
-                          <div className="p-2 rounded bg-slate-900 border border-rose-500/20">
-                            <span className="text-[10px] text-rose-400 block uppercase font-semibold">Inherent EMV</span>
-                            <span className="font-bold text-white">{formatRM(inherentEMV)}</span>
-                            <span className="text-[10px] text-slate-400 block mt-0.5">
+                        <div className="grid grid-cols-2 gap-2 mt-3.5 text-xs">
+                          <div className="p-2.5 rounded-xl bg-rose-50/60 border border-rose-200/80">
+                            <span className="text-[10px] text-rose-700 block uppercase font-bold">Inherent EMV</span>
+                            <span className="font-black text-rose-950 text-sm mt-0.5 block">{formatRM(inherentEMV)}</span>
+                            <span className="text-[10px] text-rose-700/80 block mt-0.5">
                               (P: {formatPercent(r.probInherent)} &times; {formatRM(r.lossInherentRM)})
                             </span>
                           </div>
 
-                          <div className="p-2 rounded bg-slate-900 border border-emerald-500/20">
-                            <span className="text-[10px] text-emerald-400 block uppercase font-semibold">Residual EMV</span>
-                            <span className="font-bold text-emerald-300">{formatRM(residualEMV)}</span>
-                            <span className="text-[10px] text-slate-400 block mt-0.5">
+                          <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200/90">
+                            <span className="text-[10px] text-emerald-700 block uppercase font-bold">Residual EMV</span>
+                            <span className="font-black text-emerald-950 text-sm mt-0.5 block">{formatRM(residualEMV)}</span>
+                            <span className="text-[10px] text-emerald-700/80 block mt-0.5">
                               (P: {formatPercent(r.probResidual)} &times; {formatRM(r.lossResidualRM)})
                             </span>
                           </div>
                         </div>
 
                         {/* Financial Efficiency */}
-                        <div className="mt-3 space-y-1.5 text-xs text-slate-300">
+                        <div className="mt-3.5 space-y-1.5 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200/70">
                           <div className="flex justify-between">
-                            <span className="text-slate-400">Kos Pelaburan Mitigasi:</span>
-                            <span className="font-mono text-slate-200">{formatRM(r.mitigationCostRM)}</span>
+                            <span className="text-slate-500">Kos Pelaburan Mitigasi:</span>
+                            <span className="font-mono font-semibold text-slate-800">{formatRM(r.mitigationCostRM)}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-slate-400">95% Value at Risk (VaR):</span>
-                            <span className="font-mono text-amber-300">{formatRM(r.confidenceVaR95)}</span>
+                            <span className="text-slate-500">95% Value at Risk (VaR):</span>
+                            <span className="font-mono font-bold text-amber-700">{formatRM(r.confidenceVaR95)}</span>
                           </div>
-                          <div className="flex justify-between font-semibold">
-                            <span className="text-emerald-400">Pulangan Mitigasi (RoMI):</span>
-                            <span className="text-emerald-400 font-bold">+{romi.toFixed(0)}%</span>
+                          <div className="flex justify-between font-semibold pt-1 border-t border-slate-200">
+                            <span className="text-emerald-800">Pulangan Mitigasi (RoMI):</span>
+                            <span className="text-emerald-700 font-black">+{romi.toFixed(0)}%</span>
                           </div>
                         </div>
                       </div>
 
                       <button
                         onClick={() => setSelectedRisk(r)}
-                        className="mt-4 w-full py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-slate-200 border border-slate-700 transition"
+                        className="mt-4 w-full py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 border border-emerald-200 transition"
                       >
                         Buka Analisis Bowtie &amp; Kawalan &rarr;
                       </button>
@@ -837,51 +841,51 @@ export default function App() {
         {/* TAB 3: KEY RISK INDICATORS TELEMETRY */}
         {activeTab === 'kri' && (
           <div className="space-y-6 animate-fadeIn">
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
-              <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <div>
-                  <h2 className="text-base font-bold text-white flex items-center gap-2">
-                    <Gauge className="w-5 h-5 text-teal-400" />
+                  <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <Gauge className="w-5 h-5 text-emerald-600" />
                     Sistem Penunjuk Risiko Utama Masa-Nyata (KRI Telemetri FAMA)
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 mt-0.5">
                     Pemantauan berterusan dengan ambang pencetus automatik (Hijau: Terkawal &bull; Kuning: Amaran Sedia &bull; Merah: Tindak Balas Kecemasan)
                   </p>
                 </div>
                 <button
                   onClick={handleSimulateTelemetry}
-                  className="px-3.5 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-500 text-xs font-semibold text-white shadow transition flex items-center gap-2"
+                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-semibold text-white shadow-sm transition flex items-center gap-2 active:scale-95"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${isTelemetrySimulating ? 'animate-spin' : ''}`} />
                   Uji Pencetus Sensor IoT
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {kris.map((kri) => {
                   return (
                     <div
                       key={kri.id}
-                      className="p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-4"
+                      className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-4 hover:border-emerald-300 transition"
                     >
                       <div className="flex items-start justify-between">
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-900 text-teal-400 font-bold border border-slate-800">
+                            <span className="font-mono text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">
                               {kri.id}
                             </span>
-                            <span className="text-xs text-slate-400">{kri.category}</span>
+                            <span className="text-xs text-slate-500 font-medium">{kri.category}</span>
                           </div>
-                          <h3 className="text-sm font-bold text-white mt-1">{kri.name}</h3>
+                          <h3 className="text-sm font-bold text-slate-900 mt-1.5">{kri.name}</h3>
                         </div>
 
                         <span
-                          className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${
+                          className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                             kri.status === 'GREEN'
-                              ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                               : kri.status === 'AMBER'
-                              ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
-                              : 'bg-rose-500/15 text-rose-400 border border-rose-500/30 animate-pulse'
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                              : 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse'
                           }`}
                         >
                           {kri.status}
@@ -889,30 +893,30 @@ export default function App() {
                       </div>
 
                       {/* Big Telemetry Value */}
-                      <div className="flex items-baseline gap-2 bg-slate-900 p-3 rounded-lg border border-slate-800">
-                        <span className="text-3xl font-black text-white">{kri.currentValue}</span>
-                        <span className="text-xs text-slate-400 font-medium">{kri.unit}</span>
+                      <div className="flex items-baseline gap-2 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <span className="text-3xl font-black text-slate-900">{kri.currentValue}</span>
+                        <span className="text-xs text-slate-500 font-semibold">{kri.unit}</span>
                       </div>
 
                       {/* Threshold Gauge Display */}
                       <div className="space-y-1.5 text-xs">
-                        <div className="flex justify-between text-slate-400">
-                          <span>Ambang Selamat (Hijau): &le; {kri.greenLimit}</span>
-                          <span>Ambang Amaran (Kuning): &gt; {kri.greenLimit}</span>
-                          <span>Ambang Kecemasan (Merah): &gt; {kri.amberLimit}</span>
+                        <div className="flex justify-between text-slate-500 font-medium">
+                          <span>Ambang Selamat: &le; {kri.greenLimit}</span>
+                          <span>Ambang Amaran: &gt; {kri.greenLimit}</span>
+                          <span>Kecemasan: &gt; {kri.amberLimit}</span>
                         </div>
-                        <div className="w-full bg-slate-900 rounded-full h-2.5 flex overflow-hidden border border-slate-800">
+                        <div className="w-full bg-slate-100 rounded-full h-3 flex overflow-hidden border border-slate-200">
                           <div className="bg-emerald-500 h-full w-1/3" title="Zon Hijau"></div>
-                          <div className="bg-amber-500 h-full w-1/3" title="Zon Amaran"></div>
+                          <div className="bg-amber-400 h-full w-1/3" title="Zon Amaran"></div>
                           <div className="bg-rose-500 h-full w-1/3" title="Zon Bahaya"></div>
                         </div>
                       </div>
 
-                      <p className="text-xs text-slate-300 leading-relaxed">{kri.description}</p>
+                      <p className="text-xs text-slate-600 leading-relaxed">{kri.description}</p>
 
-                      <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                      <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                         <span>Frekuensi: {kri.frequency}</span>
-                        <span>{kri.lastUpdate}</span>
+                        <span className="font-medium text-emerald-700">{kri.lastUpdate}</span>
                       </div>
                     </div>
                   );
@@ -925,14 +929,14 @@ export default function App() {
         {/* TAB 4: BOWTIE BARRIER MANAGEMENT */}
         {activeTab === 'bowtie' && (
           <div className="space-y-6 animate-fadeIn">
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <div>
-                  <h2 className="text-base font-bold text-white flex items-center gap-2">
-                    <ShieldAlert className="w-5 h-5 text-indigo-400" />
+                  <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <ShieldAlert className="w-5 h-5 text-emerald-600" />
                     Model Pengurusan Halangan Bowtie (Barrier Integrity Management)
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 mt-0.5">
                     Memetakan laluan pencegahan sebelum insiden (Preventive Barriers) dan laluan mitigasi pemulihan selepas insiden (Mitigating Barriers)
                   </p>
                 </div>
@@ -940,58 +944,60 @@ export default function App() {
 
               <div className="space-y-6">
                 {risks.map((r) => (
-                  <div key={r.id} className="p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-4">
+                  <div key={r.id} className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-900 text-indigo-400 font-bold border border-slate-800">
+                      <div className="flex items-center gap-2.5">
+                        <span className="font-mono text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">
                           {r.id}
                         </span>
-                        <h3 className="text-sm font-bold text-white">{r.title}</h3>
+                        <h3 className="text-sm font-bold text-slate-900">{r.title}</h3>
                       </div>
-                      <span className="text-xs text-emerald-400 font-semibold">{r.category}</span>
+                      <span className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                        {r.category}
+                      </span>
                     </div>
 
                     {/* Bowtie Diagram Layout */}
-                    <div className="grid grid-cols-1 lg:grid-cols-11 gap-3 items-center text-xs">
+                    <div className="grid grid-cols-1 lg:grid-cols-11 gap-3.5 items-center text-xs">
                       {/* Left: Hazard / Threats & Preventive Barriers */}
-                      <div className="lg:col-span-4 bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-2">
-                        <span className="text-[10px] font-bold text-rose-400 uppercase tracking-wider block">
+                      <div className="lg:col-span-4 bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2.5">
+                        <span className="text-[10px] font-bold text-rose-700 uppercase tracking-wider block">
                           [ Ancaman / Punca ] &rarr; Halangan Pencegahan
                         </span>
-                        <p className="text-slate-300 font-medium text-xs">{r.bowtie.hazard}</p>
+                        <p className="text-slate-800 font-medium text-xs leading-snug">{r.bowtie.hazard}</p>
                         <div className="space-y-1.5 pt-1">
                           {r.bowtie.preventiveBarriers.map((bar, i) => (
-                            <div key={i} className="flex items-center gap-2 text-slate-200 bg-slate-950 p-1.5 rounded border border-slate-800">
-                              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                              <span className="text-[11px]">{bar}</span>
+                            <div key={i} className="flex items-center gap-2 text-slate-700 bg-white p-2 rounded-lg border border-slate-200 shadow-2xs">
+                              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                              <span className="text-[11px] leading-snug">{bar}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
                       {/* Center: Top Event */}
-                      <div className="lg:col-span-3 bg-gradient-to-br from-indigo-950/80 to-slate-900 p-4 rounded-xl border border-indigo-500/40 text-center shadow-lg">
-                        <AlertTriangle className="w-6 h-6 text-amber-400 mx-auto mb-1" />
-                        <span className="text-[10px] font-bold text-amber-300 uppercase block">Peristiwa Utama (Top Event)</span>
-                        <p className="text-xs font-bold text-white mt-1 leading-snug">{r.bowtie.topEvent}</p>
+                      <div className="lg:col-span-3 bg-gradient-to-br from-emerald-700 to-green-800 text-white p-5 rounded-2xl border border-emerald-600 text-center shadow-md">
+                        <AlertTriangle className="w-6 h-6 text-amber-300 mx-auto mb-1.5" />
+                        <span className="text-[10px] font-bold text-emerald-100 uppercase tracking-wider block">Peristiwa Utama (Top Event)</span>
+                        <p className="text-xs font-bold text-white mt-1.5 leading-snug">{r.bowtie.topEvent}</p>
                       </div>
 
                       {/* Right: Mitigating Barriers & Consequences */}
-                      <div className="lg:col-span-4 bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-2">
-                        <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block">
+                      <div className="lg:col-span-4 bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2.5">
+                        <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider block">
                           Halangan Mitigasi &rarr; [ Kawalan Kerugian ]
                         </span>
                         <div className="space-y-1.5">
                           {r.bowtie.mitigationBarriers.map((bar, i) => (
-                            <div key={i} className="flex items-center gap-2 text-slate-200 bg-slate-950 p-1.5 rounded border border-slate-800">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                              <span className="text-[11px]">{bar}</span>
+                            <div key={i} className="flex items-center gap-2 text-slate-700 bg-white p-2 rounded-lg border border-slate-200 shadow-2xs">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                              <span className="text-[11px] leading-snug">{bar}</span>
                             </div>
                           ))}
                         </div>
-                        <div className="pt-2 border-t border-slate-800 flex justify-between text-[11px]">
-                          <span className="text-slate-400">Had Residual:</span>
-                          <span className="font-bold text-emerald-400">{formatRM(r.lossResidualRM)}</span>
+                        <div className="pt-2 border-t border-slate-200 flex justify-between text-[11px]">
+                          <span className="text-slate-500 font-medium">Had Residual:</span>
+                          <span className="font-bold text-emerald-700">{formatRM(r.lossResidualRM)}</span>
                         </div>
                       </div>
                     </div>
@@ -1004,11 +1010,11 @@ export default function App() {
 
         {/* TAB 5: QUANTITATIVE RISK REGISTER */}
         {activeTab === 'register' && (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl shadow-sm overflow-hidden animate-fadeIn">
-            <div className="p-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+          <div className="bg-white border border-slate-200/90 rounded-2xl shadow-sm overflow-hidden animate-fadeIn">
+            <div className="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-white">
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-white">Daftar Risiko Kuantitatif FAMA</h2>
-                <span className="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full border border-slate-700">
+                <h2 className="text-base font-bold text-slate-900">Daftar Risiko Kuantitatif FAMA</h2>
+                <span className="text-xs bg-emerald-50 text-emerald-800 font-semibold px-2.5 py-0.5 rounded-full border border-emerald-200">
                   {filteredRisks.length} rekod berangka
                 </span>
               </div>
@@ -1021,14 +1027,14 @@ export default function App() {
                     placeholder="Cari tajuk, kod QRA, pegawai..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-8 pr-3 py-1.5 text-xs bg-slate-950 border border-slate-800 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 w-56 sm:w-60"
+                    className="pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white w-56 sm:w-60 transition"
                   />
                 </div>
 
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="py-1.5 px-2.5 text-xs bg-slate-950 border border-slate-800 rounded-lg text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="py-1.5 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-emerald-500 focus:bg-white transition"
                 >
                   <option value="All">Semua Kategori</option>
                   {CATEGORIES.map((c) => (
@@ -1040,7 +1046,7 @@ export default function App() {
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-950/70 text-slate-400 uppercase font-semibold border-b border-slate-800 tracking-wider">
+                <thead className="bg-slate-50/80 text-slate-600 uppercase font-semibold border-b border-slate-200 tracking-wider">
                   <tr>
                     <th className="py-3 px-4">Kod &amp; Inisiatif FAMA</th>
                     <th className="py-3 px-4">Kebarangkalian (P)</th>
@@ -1052,7 +1058,7 @@ export default function App() {
                     <th className="py-3 px-4 text-right">Butiran</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y border-slate-800/60 divide-slate-800/60">
+                <tbody className="divide-y divide-slate-100">
                   {filteredRisks.map((risk) => {
                     const inherentEMV = risk.probInherent * risk.lossInherentRM;
                     const residualEMV = risk.probResidual * risk.lossResidualRM;
@@ -1061,54 +1067,56 @@ export default function App() {
                       <tr
                         key={risk.id}
                         onClick={() => setSelectedRisk(risk)}
-                        className="hover:bg-slate-800/40 transition cursor-pointer group"
+                        className="hover:bg-emerald-50/40 transition cursor-pointer group"
                       >
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-2">
-                            <span className="font-mono text-emerald-400 font-bold">{risk.id}</span>
-                            <span className="font-semibold text-slate-200 group-hover:text-emerald-300 line-clamp-1">
+                            <span className="font-mono text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                              {risk.id}
+                            </span>
+                            <span className="font-semibold text-slate-900 group-hover:text-emerald-700 line-clamp-1 transition">
                               {risk.title}
                             </span>
                           </div>
-                          <span className="text-[11px] text-slate-400">{risk.owner}</span>
+                          <span className="text-[11px] text-slate-500">{risk.owner}</span>
                         </td>
 
                         <td className="py-3 px-4">
-                          <span className="text-slate-300">
-                            {formatPercent(risk.probResidual)} <span className="text-slate-500 text-[10px]">(asal {formatPercent(risk.probInherent)})</span>
+                          <span className="text-slate-700 font-medium">
+                            {formatPercent(risk.probResidual)} <span className="text-slate-400 text-[10px]">(asal {formatPercent(risk.probInherent)})</span>
                           </span>
                         </td>
 
-                        <td className="py-3 px-4 font-mono text-rose-300 font-medium">
+                        <td className="py-3 px-4 font-mono text-rose-600 font-bold">
                           {formatRM(inherentEMV)}
                         </td>
 
-                        <td className="py-3 px-4 font-mono text-emerald-400 font-bold">
+                        <td className="py-3 px-4 font-mono text-emerald-700 font-black">
                           {formatRM(residualEMV)}
                         </td>
 
-                        <td className="py-3 px-4 font-mono text-slate-300">
+                        <td className="py-3 px-4 font-mono text-slate-700 font-medium">
                           {formatRM(risk.mitigationCostRM)}
                         </td>
 
-                        <td className="py-3 px-4 font-mono text-amber-300 font-medium">
+                        <td className="py-3 px-4 font-mono text-amber-700 font-bold">
                           {formatRM(risk.confidenceVaR95)}
                         </td>
 
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-2">
-                            <div className="w-16 bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                            <div className="w-16 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
                               <div
-                                className="h-full bg-emerald-500 rounded-full"
+                                className="h-full bg-emerald-600 rounded-full"
                                 style={{ width: `${risk.progress}%` }}
                               ></div>
                             </div>
-                            <span className="text-[11px] font-mono text-slate-400">{risk.progress}%</span>
+                            <span className="text-[11px] font-mono font-medium text-slate-500">{risk.progress}%</span>
                           </div>
                         </td>
 
                         <td className="py-3 px-4 text-right">
-                          <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white inline-block transition transform group-hover:translate-x-0.5" />
+                          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-700 inline-block transition transform group-hover:translate-x-0.5" />
                         </td>
                       </tr>
                     );
@@ -1123,79 +1131,79 @@ export default function App() {
 
       {/* Detail Inspection Drawer for Quantitative Risk */}
       {selectedRisk && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex justify-end animate-fadeIn">
-          <div className="w-full max-w-xl bg-slate-900 border-l border-slate-800 h-full overflow-y-auto p-6 flex flex-col justify-between shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex justify-end animate-fadeIn">
+          <div className="w-full max-w-xl bg-white border-l border-slate-200 h-full overflow-y-auto p-6 flex flex-col justify-between shadow-2xl">
             <div className="space-y-6">
               {/* Header */}
-              <div className="flex items-start justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-start justify-between border-b border-slate-100 pb-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-800 text-emerald-400 font-bold border border-slate-700">
+                    <span className="font-mono text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">
                       {selectedRisk.id}
                     </span>
-                    <span className="text-xs text-slate-400">{selectedRisk.category}</span>
+                    <span className="text-xs text-slate-500 font-medium">{selectedRisk.category}</span>
                   </div>
-                  <h3 className="text-base font-bold text-white mt-1.5 leading-snug">{selectedRisk.title}</h3>
+                  <h3 className="text-base font-bold text-slate-900 mt-2 leading-snug">{selectedRisk.title}</h3>
                 </div>
                 <button
                   onClick={() => setSelectedRisk(null)}
-                  className="p-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition"
+                  className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* EMV Quantitative Card */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-[10px] text-rose-400 block uppercase font-bold">Inherent Loss &amp; EMV</span>
-                  <div className="text-lg font-black text-white mt-1">
+              <div className="grid grid-cols-2 gap-3.5">
+                <div className="p-4 rounded-2xl bg-rose-50/60 border border-rose-200/80">
+                  <span className="text-[10px] text-rose-700 block uppercase font-bold">Inherent Loss &amp; EMV</span>
+                  <div className="text-xl font-black text-rose-950 mt-1">
                     {formatRM(selectedRisk.probInherent * selectedRisk.lossInherentRM)}
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-1">
+                  <p className="text-[11px] text-rose-700/90 mt-1">
                     Kebarangkalian: {formatPercent(selectedRisk.probInherent)} &bull; Kerugian Bersih: {formatRM(selectedRisk.lossInherentRM)}
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/30">
-                  <span className="text-[10px] text-emerald-400 block uppercase font-bold">Residual Loss &amp; EMV</span>
-                  <div className="text-lg font-black text-emerald-300 mt-1">
+                <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+                  <span className="text-[10px] text-emerald-700 block uppercase font-bold">Residual Loss &amp; EMV</span>
+                  <div className="text-xl font-black text-emerald-900 mt-1">
                     {formatRM(selectedRisk.probResidual * selectedRisk.lossResidualRM)}
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-1">
+                  <p className="text-[11px] text-emerald-700/90 mt-1">
                     Kebarangkalian: {formatPercent(selectedRisk.probResidual)} &bull; Kerugian Bersih: {formatRM(selectedRisk.lossResidualRM)}
                   </p>
                 </div>
               </div>
 
               {/* Governance & Bowtie Summary */}
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3 text-xs">
+              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Pegawai Pemilik:</span>
-                  <span className="text-slate-200 font-semibold">{selectedRisk.owner}</span>
+                  <span className="text-slate-500 font-medium">Pegawai Pemilik:</span>
+                  <span className="text-slate-900 font-bold">{selectedRisk.owner}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Kos Pelaburan Mitigasi:</span>
-                  <span className="text-teal-400 font-bold">{formatRM(selectedRisk.mitigationCostRM)}</span>
+                  <span className="text-slate-500 font-medium">Kos Pelaburan Mitigasi:</span>
+                  <span className="text-emerald-700 font-bold">{formatRM(selectedRisk.mitigationCostRM)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">95% Value at Risk (VaR):</span>
-                  <span className="text-amber-300 font-bold">{formatRM(selectedRisk.confidenceVaR95)}</span>
+                  <span className="text-slate-500 font-medium">95% Value at Risk (VaR):</span>
+                  <span className="text-amber-700 font-bold">{formatRM(selectedRisk.confidenceVaR95)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Status Tindakan:</span>
-                  <span className="text-emerald-400 font-semibold">{selectedRisk.status} ({selectedRisk.progress}%)</span>
+                  <span className="text-slate-500 font-medium">Status Tindakan:</span>
+                  <span className="text-emerald-800 font-semibold">{selectedRisk.status} ({selectedRisk.progress}%)</span>
                 </div>
               </div>
 
               {/* Bowtie Preventive Barriers */}
               <div>
-                <h4 className="text-xs uppercase font-bold text-emerald-400 tracking-wider mb-2 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4" /> Halangan Pencegahan (Preventive Barriers)
+                <h4 className="text-xs uppercase font-bold text-emerald-800 tracking-wider mb-2.5 flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" /> Halangan Pencegahan (Preventive Barriers)
                 </h4>
                 <div className="space-y-1.5">
                   {selectedRisk.bowtie.preventiveBarriers.map((bar, i) => (
-                    <div key={i} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-300">
+                    <div key={i} className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700">
                       &bull; {bar}
                     </div>
                   ))}
@@ -1204,12 +1212,12 @@ export default function App() {
 
               {/* Bowtie Recovery Barriers */}
               <div>
-                <h4 className="text-xs uppercase font-bold text-teal-400 tracking-wider mb-2 flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4" /> Halangan Pemulihan (Mitigating Barriers)
+                <h4 className="text-xs uppercase font-bold text-emerald-800 tracking-wider mb-2.5 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Halangan Pemulihan (Mitigating Barriers)
                 </h4>
                 <div className="space-y-1.5">
                   {selectedRisk.bowtie.mitigationBarriers.map((bar, i) => (
-                    <div key={i} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-300">
+                    <div key={i} className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700">
                       &bull; {bar}
                     </div>
                   ))}
@@ -1217,10 +1225,10 @@ export default function App() {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-slate-800">
+            <div className="pt-6 border-t border-slate-100">
               <button
                 onClick={() => setSelectedRisk(null)}
-                className="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition"
+                className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-800 transition"
               >
                 Tutup Paparan Analisis
               </button>
@@ -1230,15 +1238,15 @@ export default function App() {
       )}
 
       {/* Persistent Bottom Navigation Menu */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 shadow-2xl px-4 py-2">
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg px-4 py-2">
         <div className="max-w-md mx-auto flex items-center justify-around">
           
           <button
             onClick={() => setActiveTab('overview')}
-            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-xs font-medium transition ${
               activeTab === 'overview'
-                ? 'text-emerald-400 bg-emerald-500/10'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             <LayoutDashboard className="w-5 h-5" />
@@ -1247,10 +1255,10 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab('emv')}
-            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-xs font-medium transition ${
               activeTab === 'emv'
-                ? 'text-emerald-400 bg-emerald-500/10'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             <DollarSign className="w-5 h-5" />
@@ -1259,10 +1267,10 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab('kri')}
-            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-xs font-medium transition ${
               activeTab === 'kri'
-                ? 'text-emerald-400 bg-emerald-500/10'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             <Gauge className="w-5 h-5" />
@@ -1271,10 +1279,10 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab('bowtie')}
-            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-xs font-medium transition ${
               activeTab === 'bowtie'
-                ? 'text-emerald-400 bg-emerald-500/10'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             <ShieldAlert className="w-5 h-5" />
@@ -1283,10 +1291,10 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab('register')}
-            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-lg text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-xs font-medium transition ${
               activeTab === 'register'
-                ? 'text-emerald-400 bg-emerald-500/10'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             <Sliders className="w-5 h-5" />
