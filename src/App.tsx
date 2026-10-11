@@ -41,9 +41,9 @@ import {
   Zap,
   Target,
   BarChart3,
-  PieChart as PieIcon,
   CheckSquare,
-  AlertCircle
+  Users,
+  Compass
 } from 'lucide-react';
 import {
   BarChart,
@@ -53,8 +53,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
-  Cell
+  Legend
 } from 'recharts';
 
 export interface BowtieItem {
@@ -123,7 +122,7 @@ const CATEGORIES = [
 ];
 
 const INITIAL_DATA: RiskOpportunityItem[] = [
-  // --- RISIKO (-VE) ---
+  // --- RISIKO (-VE) FAMA ---
   {
     id: 'R-FAMA-01',
     type: 'RISK',
@@ -136,11 +135,11 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
         url: 'https://www.astroawani.com/berita-malaysia/fama-tubuh-jawatankuasa-tingkat-stok-makanan-hadapi-el-nino'
       },
       {
-        text: 'FAMA FB: Pengurusan Stok Penampan Kebangsaan',
+        text: 'Kenyataan Rasmi FAMA: Pengurusan Stok Penampan Kebangsaan',
         url: 'https://www.facebook.com/FAMA.Malaysia/posts/1453131836857104/'
       }
     ],
-    owner: 'En. Hishamuddin (Bhg. Pemasaran Segar & Intervensi)',
+    owner: 'En. Hishamuddin (Pengarah Bhg. Pemasaran Segar & Intervensi FAMA)',
     strategy: 'Mitigate',
     status: 'In Progress',
     actionStatus: 'Sedang Diambil Tindakan',
@@ -167,13 +166,13 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
       ],
       impacts: [
         'Kenaikan harga barangan asas pengguna',
-        'Teguran audit dan ketidakcapaian KPI sekuriti makanan',
+        'Teguran audit dan ketidakcapaian sasaran sekuriti makanan FAMA',
         'Gangguan rantaian bekalan agromakanan negara'
       ]
     },
     treatmentPlan: [
       'Kunci kuota off-take pembekal tempatan 60 hari lebih awal untuk 1,200 tan metrik stok penampan.',
-      'Laksanakan mobilisasi kargo antara-negeri di bawah Jawatankuasa Khas Kesiapsiagaan Stok Makanan.',
+      'Laksanakan mobilisasi kargo antara-negeri di bawah Jawatankuasa Khas Kesiapsiagaan Stok Makanan FAMA.',
       'Sediakan laporan impak harga mingguan kepada Pengurusan Tertinggi FAMA.'
     ]
   },
@@ -185,11 +184,11 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     mandate: 'Kesinambungan Operasi',
     mandateCitation: [
       {
-        text: 'Astro AWANI: Kesiapsiagaan Rantaian Bekalan & Fenomena El Niño',
+        text: 'Astro AWANI: Kesiapsiagaan Rantaian Bekalan & Fenomena El Niño FAMA',
         url: 'https://www.astroawani.com/berita-malaysia/fama-tubuh-jawatankuasa-tingkat-stok-makanan-hadapi-el-nino'
       }
     ],
-    owner: 'Pn. Rohana Ramli (Bhg. Logistik & Rantaian Bekalan)',
+    owner: 'Pn. Rohana Ramli (Pengarah Bhg. Logistik & Rantaian Bekalan FAMA)',
     strategy: 'Mitigate',
     status: 'Behind Schedule',
     actionStatus: 'Sedang Diambil Tindakan',
@@ -223,7 +222,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     treatmentPlan: [
       'Pemasangan sensor telemetri suhu IoT dengan penggera amaran automatik terus ke telefon pegawai bertugas.',
       'Sewa treler sejuk beku kecemasan 40 kaki sebagai sandaran aktif semasa musim kemarau.',
-      'Jadual penyelenggaraan berkala dwi-mingguan untuk semua unit kondenser.'
+      'Jadual penyelenggaraan berkala dwi-mingguan untuk semua unit kondenser bilik sejuk FAMA.'
     ]
   },
   {
@@ -238,7 +237,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
         url: 'https://www.astroawani.com/berita-malaysia/fama-tubuh-jawatankuasa-tingkat-stok-makanan-hadapi-el-nino'
       }
     ],
-    owner: 'Ir. Zulkifli (Bhg. Ladang Kontrak & Pengembangan)',
+    owner: 'Ir. Zulkifli (Pengarah Bhg. Ladang Kontrak & Pengembangan FAMA)',
     strategy: 'Transfer',
     status: 'In Progress',
     actionStatus: 'Sedang Diambil Tindakan',
@@ -253,10 +252,10 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     progress: 60,
     bowtie: {
       hazard: 'Kemarau Panjang El Niño & Hujan Lebat Monsun Timur Laut (La Niña)',
-      topEvent: 'Kemusnahan Skala Luas Ladang Kontrak & Defisit Penuaian Sayuran Segar',
+      topEvent: 'Kemusnahan Skala Luas Ladang Kontrak & Defisit Penuaian Sayuran Segar FAMA',
       preventiveBarriers: [
         { title: 'Jadual Giliran Tanaman Luar Musim Berperingkat', score: 4 },
-        { title: 'Geran Terowong Lindungan Hujan (Rain Shelters)', score: 3 },
+        { title: 'Geran Rumah Lindungan Hujan (Rain Shelters)', score: 3 },
         { title: 'Sistem Fertigasi Tertutup Berkecekapan Tinggi', score: 4 }
       ],
       mitigationBarriers: [
@@ -265,14 +264,14 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
       ],
       impacts: [
         'Petani kontrak menanggung kerugian modal',
-        'Kekurangan penawaran hasil segar di Pasar Tani',
+        'Kekurangan penawaran hasil segar di Pasar Tani FAMA',
         'Pampasan kerosakan bencana agromakanan'
       ]
     },
     treatmentPlan: [
       'Pendaftaran mandatori semua peserta Ladang Kontrak FAMA ke bawah Skim Takaful Agromakanan KPKM.',
-      'Penyusunan zon penanaman berjadual mengikut kalendar cuaca ramalan METMalaysia.',
-      'Penyediaan stok benih dan baja sandaran kecemasan melalui Tabung Bencana Agromakanan.'
+      'Penyusunan zon penanaman berjadual mengikut kalendar ramalan cuaca METMalaysia.',
+      'Penyediaan stok benih dan baja sandaran kecemasan melalui Tabung Bencana Agromakanan FAMA.'
     ]
   },
   {
@@ -287,7 +286,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
         url: 'https://www.fama.gov.my/web/pub/gambar/-/asset_publisher/Li0C7t69bLDU/content/18-hingga-20-julai-2022-isnin-hingga-rabu-bengkel-pembangunan-pelan-pengurusan-risiko-fama-bersama-mampu-hotel-mercure-selayang-bengkel-ini-dianjurkan?refererPlid=30269'
       }
     ],
-    owner: 'Dr. Noraini Othman (Ketua Pegawai FAMACORP / AGROMAS)',
+    owner: 'Dr. Noraini Othman (Ketua Pegawai Eksekutif FAMACORP / AGROMAS)',
     strategy: 'Avoid',
     status: 'Under Review',
     actionStatus: 'Sedang Diambil Tindakan',
@@ -315,7 +314,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
       impacts: [
         'Kerosakan reputasi jenama Malaysia Best / AGROMAS',
         'Kerugian kos kargo eksport dan penalti pelabuhan',
-        'Penggantungan lesen eksport agromakanan'
+        'Penggantungan lesen eksport agromakanan FAMA'
       ]
     },
     treatmentPlan: [
@@ -336,7 +335,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
         url: 'https://auditfama.com/tentang-kami'
       }
     ],
-    owner: 'Pn. Farah Nadia (Bhg. Regulatori & Kualiti Standard)',
+    owner: 'Pn. Farah Nadia (Ketua Cawangan Regulatori GPL & Kualiti Standard FAMA)',
     strategy: 'Mitigate',
     status: 'Completed',
     actionStatus: 'Telah Diambil Tindakan',
@@ -353,12 +352,12 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
       hazard: 'Penyeludupan Hasil Segar Sub-Standard, Pemalsuan Label & Dokumen GPL Palsu',
       topEvent: 'Kemasukan Kargo Pertanian Tanpa Label Menggugat Kualiti Pasaran Tempatan',
       preventiveBarriers: [
-        { title: 'Penguatkuasaan Digital e-Lesen GPL Bersepadu', score: 5 },
+        { title: 'Penguatkuasaan Digital e-Lesen GPL Bersepadu FAMA', score: 5 },
         { title: 'Prapemeriksaan Bersama Agensi MAQIS di Pintu Sempadan', score: 4 },
         { title: 'Audit Kepatuhan Prosedur oleh Bahagian Audit Dalam', score: 4 }
       ],
       mitigationBarriers: [
-        { title: 'Sitaan Kuarantin Segera di Kompleks Sempadan', score: 5 },
+        { title: 'Sitaan Kuarantin Segera di Kompleks Sempadan FAMA-MAQIS', score: 5 },
         { title: 'Pelaporan Terus kepada Jawatankuasa Audit Lembaga', score: 4 }
       ],
       impacts: [
@@ -369,14 +368,14 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     },
     treatmentPlan: [
       'Pelaksanaan sistem imbasan kod QR e-Lesen GPL mandatori di pintu Bukit Kayu Hitam dan Pelabuhan Klang.',
-      'Latihan berkala pegawai penguat kuasa bersama pihak MAQIS.',
-      'Pembentangan suku tahunan penemuan audit penguatkuasaan kepada Jawatankuasa Audit Lembaga.'
+      'Latihan berkala pegawai penguat kuasa FAMA bersama pihak MAQIS.',
+      'Pembentangan suku tahunan penemuan audit penguatkuasaan kepada Jawatankuasa Audit Lembaga FAMA.'
     ]
   },
   {
     id: 'R-FAMA-06',
     type: 'RISK',
-    title: 'Kehilangan & Kerosakan Aset Alih Serta Stor Utama FAMA (Pematuhan 1PP & JKPAK)',
+    title: 'Kehilangan & Kerosakan Aset Alih Serta Stor Utama FAMA (Pematuhan Tatacara 1PP & JKPAK)',
     category: 'Aset & Stor Utama FAMA',
     mandate: 'Pelaporan & Audit Dalam',
     mandateCitation: [
@@ -389,7 +388,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
         url: 'https://www.fama.gov.my/fungsi-ps'
       }
     ],
-    owner: 'En. Khairul Anuar (Unit Pengurusan Aset & Stor FAMA)',
+    owner: 'En. Khairul Anuar (Ketua Cawangan Pengurusan Aset & Stor FAMA)',
     strategy: 'Mitigate',
     status: 'In Progress',
     actionStatus: 'Sedang Diambil Tindakan',
@@ -404,31 +403,31 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     progress: 85,
     bowtie: {
       hazard: 'Kecuaian Kawalan Keluar Masuk, Kelemahan Rekod KEW.PA & Ketiadaan Audit Mengejut',
-      topEvent: 'Kehilangan Peralatan Logistik, Bakul Plastik & Aset Sokongan Hab Pemasaran',
+      topEvent: 'Kehilangan Peralatan Logistik, Bakul Plastik & Aset Sokongan Hab Pemasaran FAMA',
       preventiveBarriers: [
-        { title: 'Merekodkan Pergerakan Aset Menggunakan KEW.PA 9 / SPS', score: 4 },
+        { title: 'Merekodkan Pergerakan Aset Menggunakan KEW.PA 9 / SPS FAMA', score: 4 },
         { title: 'Program Kesedaran Tatacara Pengurusan Aset Kerajaan', score: 4 },
         { title: 'Pemasangan Jeriji Keselamatan & Kawalan Berpusat', score: 4 }
       ],
       mitigationBarriers: [
-        { title: 'Pemeriksaan Mengejut oleh JKPAK Suku Tahunan', score: 4 },
-        { title: 'Pemasangan CCTV & Kad Akses Pintu Stor Utama', score: 5 },
+        { title: 'Pemeriksaan Mengejut oleh JKPAK FAMA Suku Tahunan', score: 4 },
+        { title: 'Pemasangan CCTV & Kad Akses Pintu Stor Utama FAMA', score: 5 },
         { title: 'Tindakan Surcaj/Tatatertib jika Berlaku Kecuaian', score: 4 }
       ],
       impacts: [
         'Pembaziran harta kerajaan dan kos penggantian aset',
         'Teguran audit tatakelola aset alih 1PP',
-        'Kelewatan operasi logistik pengedaran buah/sayur'
+        'Kelewatan operasi logistik pengedaran buah/sayur FAMA'
       ]
     },
     treatmentPlan: [
-      'Penyelarasan penuh inventori dengan Sistem Pengurusan Stor (SPS) dan tandatangan borang KEW.PA 7 di setiap lokasi.',
-      'Penetapan jadual mesyuarat JKPAK setiap 3 bulan bagi membentangkan laporan eksekutif sebelum 15 Mac.',
+      'Penyelarasan penuh inventori dengan Sistem Pengurusan Stor (SPS) dan tandatangan borang KEW.PA 7 di setiap lokasi FAMA.',
+      'Penetapan jadual mesyuarat JKPAK FAMA setiap 3 bulan bagi membentangkan laporan eksekutif sebelum 15 Mac.',
       'Pemasangan kamera litar tertutup (CCTV) dan kunci pintar di stor simpanan aset bernilai tinggi.'
     ]
   },
 
-  // --- PELUANG (+VE) ---
+  // --- PELUANG (+VE) FAMA ---
   {
     id: 'P-FAMA-01',
     type: 'OPPORTUNITY',
@@ -437,11 +436,11 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     mandate: 'Kesinambungan Operasi',
     mandateCitation: [
       {
-        text: 'Astro AWANI: Peningkatan Stok Makanan Hadapi El Niño',
+        text: 'Astro AWANI: Peningkatan Stok Makanan Hadapi El Niño FAMA',
         url: 'https://www.astroawani.com/berita-malaysia/fama-tubuh-jawatankuasa-tingkat-stok-makanan-hadapi-el-nino'
       }
     ],
-    owner: 'Pn. Rohana Ramli (Bhg. Logistik & Rantaian Bekalan)',
+    owner: 'Pn. Rohana Ramli (Pengarah Bhg. Logistik & Rantaian Bekalan FAMA)',
     strategy: 'Enhance',
     status: 'In Progress',
     actionStatus: 'Telah Diambil Tindakan',
@@ -455,7 +454,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     dueDate: '2026-11-30',
     progress: 90,
     treatmentPlan: [
-      'Penyepaduan data telemetri bilik sejuk dari semua 14 negeri ke papan pemuka pusat SPRF.',
+      'Penyepaduan data telemetri bilik sejuk dari semua 14 negeri ke papan pemuka pusat SPRF FAMA.',
       'Pengurangan kadar kerosakan pasca-tuai sayuran daripada 15% kepada bawah 3%.',
       'Pemberian amaran automatik kepada pegawai bertugas 15 minit sebelum ambang kritikal dicapai.'
     ]
@@ -468,11 +467,11 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     mandate: 'Kesinambungan Operasi',
     mandateCitation: [
       {
-        text: 'FAMA FB: Pengurusan Stok & Intervensi Harga Rakyat',
+        text: 'Kenyataan Rasmi FAMA: Pengurusan Stok & Intervensi Harga Rakyat',
         url: 'https://www.facebook.com/FAMA.Malaysia/posts/1453131836857104/'
       }
     ],
-    owner: 'En. Hishamuddin (Bhg. Pemasaran Segar & Intervensi)',
+    owner: 'En. Hishamuddin (Pengarah Bhg. Pemasaran Segar & Intervensi FAMA)',
     strategy: 'Exploit',
     status: 'In Progress',
     actionStatus: 'Telah Diambil Tindakan',
@@ -503,7 +502,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
         url: 'https://www.fama.gov.my/web/pub/gambar/-/asset_publisher/Li0C7t69bLDU/content/18-hingga-20-julai-2022-isnin-hingga-rabu-bengkel-pembangunan-pelan-pengurusan-risiko-fama-bersama-mampu-hotel-mercure-selayang-bengkel-ini-dianjurkan?refererPlid=30269'
       }
     ],
-    owner: 'Dr. Noraini Othman (Ketua Pegawai FAMACORP / AGROMAS)',
+    owner: 'Dr. Noraini Othman (Ketua Pegawai Eksekutif FAMACORP / AGROMAS)',
     strategy: 'Exploit',
     status: 'In Progress',
     actionStatus: 'Sedang Diambil Tindakan',
@@ -517,7 +516,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     dueDate: '2027-02-28',
     progress: 65,
     treatmentPlan: [
-      'Penyertaan dalam Ekspo Agromakanan Gulfood Dubai bagi memperkenalkan produk hiliran durian beku AGROMAS.',
+      'Penyertaan dalam Ekspo Agromakanan Gulfood Dubai bagi memperkenalkan produk hiliran durian beku AGROMAS FAMA.',
       'Memperoleh sijil Halal JAKIM dan pensijilan biosekuriti antarabangsa bagi meluaskan pasaran Timur Tengah.',
       'Membina perkongsian strategik dengan pengedar pasar raya besar di Australia dan Arab Saudi.'
     ]
@@ -530,7 +529,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     mandate: 'Pelaporan & Audit Dalam',
     mandateCitation: [
       {
-        text: 'Portal Rasmi Audit FAMA: Jawatankuasa Audit Lembaga',
+        text: 'Portal Rasmi Audit FAMA: Jawatankuasa Audit Lembaga Pengarah FAMA',
         url: 'https://auditfama.com/tentang-kami'
       },
       {
@@ -538,7 +537,7 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
         url: 'https://www.fama.gov.my/fungsi-ps'
       }
     ],
-    owner: 'En. Azlan Shah (Bhg. Perancangan Strategik & Bahagian Audit Dalam)',
+    owner: 'En. Azlan Shah (Pengarah Bhg. Perancangan Strategik & Bahagian Audit Dalam FAMA)',
     strategy: 'Enhance',
     status: 'Completed',
     actionStatus: 'Telah Diambil Tindakan',
@@ -552,9 +551,9 @@ const INITIAL_DATA: RiskOpportunityItem[] = [
     dueDate: '2026-10-15',
     progress: 100,
     treatmentPlan: [
-      'Menetapkan kriteria penilaian RoMI berasaskan data saintifik bagi setiap permohonan Bajet Pembangunan tahunan.',
+      'Menetapkan kriteria penilaian RoMI berasaskan data saintifik bagi setiap permohonan Bajet Pembangunan tahunan FAMA.',
       'Pelaporan suku tahunan status tindakan rawatan risiko terus ke Jawatankuasa Audit Lembaga Pengarah FAMA.',
-      'Mewujudkan sesi penyelarasan dwi-tahunan antara pemilik risiko dan Bahagian Audit Dalam.'
+      'Mewujudkan sesi penyelarasan dwi-tahunan antara pemilik risiko dan Bahagian Audit Dalam FAMA.'
     ]
   }
 ];
@@ -564,7 +563,7 @@ const INITIAL_KRIS: KRIItem[] = [
     id: 'KRI-TMP-01',
     name: 'Suhu Bilik Sejuk PPL (> 4°C)',
     category: 'Rangkaian PPL & Rantaian Sejuk',
-    linkedMandate: 'Kesinambungan Operasi (Kesiapsiagaan Gelombang Haba El Niño)',
+    linkedMandate: 'Kesinambungan Operasi (Kesiapsiagaan Gelombang Haba El Niño FAMA)',
     unit: 'Minit Sisihan',
     currentValue: 18,
     greenLimit: 15,
@@ -578,7 +577,7 @@ const INITIAL_KRIS: KRIItem[] = [
     id: 'KRI-STK-01',
     name: 'Penampan Bekalan JAM (Days of Inventory)',
     category: 'Jualan Agro MADANI & Intervensi',
-    linkedMandate: 'Kesinambungan Operasi (Jawatankuasa Khas Stok Makanan El Niño)',
+    linkedMandate: 'Kesinambungan Operasi (Jawatankuasa Khas Stok Makanan El Niño FAMA)',
     unit: 'Hari Bekalan',
     currentValue: 14,
     greenLimit: 21,
@@ -593,7 +592,7 @@ const INITIAL_KRIS: KRIItem[] = [
     id: 'KRI-SUP-01',
     name: 'Ketepatan Pembekal Ladang Kontrak (OTIF)',
     category: 'Ladang Kontrak & Hasil Segar',
-    linkedMandate: 'Kesinambungan Operasi (Bencana Cuaca & Takaful Agromakanan)',
+    linkedMandate: 'Kesinambungan Operasi (Bencana Cuaca & Takaful Agromakanan FAMA)',
     unit: '% On-Time In-Full',
     currentValue: 91.5,
     greenLimit: 95.0,
@@ -608,7 +607,7 @@ const INITIAL_KRIS: KRIItem[] = [
     id: 'KRI-GPL-01',
     name: 'Kadar Penolakan Konsainan GPL Sempadan',
     category: 'Regulatori GPL & Kualiti',
-    linkedMandate: 'Pelaporan & Audit Dalam (Pematuhan Standard & Integriti)',
+    linkedMandate: 'Pelaporan & Audit Dalam (Pematuhan Standard & Integriti FAMA)',
     unit: '% Daripada Jumlah Kargo',
     currentValue: 1.8,
     greenLimit: 2.0,
@@ -630,7 +629,7 @@ export default function App() {
   const [items, setItems] = useState<RiskOpportunityItem[]>(INITIAL_DATA);
   const [kris, setKris] = useState<KRIItem[]>(INITIAL_KRIS);
   const [selectedItem, setSelectedItem] = useState<RiskOpportunityItem | null>(null);
-  const [activeTab, setActiveTab] = useState<'overview' | 'matrix' | 'bowtie' | 'mandates' | 'register' | 'monitoring'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'context' | 'matrix' | 'bowtie' | 'mandates' | 'register' | 'monitoring'>('overview');
   const [itemTypeFilter, setItemTypeFilter] = useState<'ALL' | 'RISK' | 'OPPORTUNITY'>('ALL');
   const [mandateFilter, setMandateFilter] = useState('All');
   const [categoryFilter, setCategoryFilter] = useState('All');
@@ -732,7 +731,7 @@ export default function App() {
       'Jenis (Risiko/Peluang)',
       'Pernyataan',
       'Kategori',
-      'Mandat Tadbir Urus',
+      'Mandat Tadbir Urus FAMA',
       'Pegawai Pemilik',
       'Strategi Tindak Balas',
       'Impak Asal (1-10)',
@@ -786,11 +785,11 @@ export default function App() {
             <h1 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
               SPRF &bull; FAMA Malaysia
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200">
-                ISO 9001:2015 &amp; MS ISO 31000:2010
+                Sistem Pengurusan Risiko &amp; Peluang FAMA
               </span>
             </h1>
             <p className="text-xs text-slate-500">
-              Sistem Pengurusan Risiko &amp; Peluang (7 Langkah Piawaian Kerajaan &bull; Analisis Bow-Tie &bull; Dwi-Matriks 10&times;10)
+              Lembaga Pemasaran Pertanian Persekutuan &bull; MS ISO 31000:2010 &amp; ISO 9001:2015 &bull; Jawatankuasa Audit Lembaga Pengarah FAMA
             </p>
           </div>
         </div>
@@ -828,13 +827,13 @@ export default function App() {
                 </h2>
               </div>
               <p className="text-xs text-slate-600 max-w-4xl leading-relaxed">
-                Penyelarasan menyeluruh merangkumi <strong>7 Langkah Piawaian</strong>: Pengwujudan Konteks (7S/PESTEL), Analisis Bow-Tie, Heat Matrix Berkembar 10&times;10 (Risiko &amp; Peluang), Pelan Tindak Balas, dan Pemantauan Berterusan bersama <strong>Bahagian Audit Dalam</strong> &amp; <strong>Jawatankuasa Audit Lembaga</strong>.
+                Penyelarasan menyeluruh merangkumi <strong>7 Langkah Piawaian Kerajaan</strong>: Pengwujudan Konteks (McKinsey 7S &amp; PESTEL FAMA), Analisis Bow-Tie, Heat Matrix Berkembar 10&times;10 (Risiko &amp; Peluang), Pelan Tindak Balas, dan Pemantauan Berterusan bersama <strong>Bahagian Audit Dalam</strong> &amp; <strong>Jawatankuasa Audit Lembaga Pengarah FAMA</strong>.
               </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setActiveTab('mandates')}
-                className="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-xs font-semibold text-white shadow-xs transition"
+                className="px-3.5 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-xs font-semibold text-white shadow-xs transition"
               >
                 Lihat 3 Mandat Tadbir Urus &rarr;
               </button>
@@ -931,40 +930,40 @@ export default function App() {
             <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
               <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
                 <Target className="w-4 h-4 text-emerald-700" />
-                Aliran 7 Langkah Pengurusan Risiko &amp; Peluang (Adaptasi MS ISO 31000:2010)
+                Aliran 7 Langkah Pengurusan Risiko &amp; Peluang FAMA (Adaptasi MS ISO 31000:2010)
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 text-xs text-center">
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                <div onClick={() => setActiveTab('context')} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-emerald-300 transition">
                   <span className="text-[10px] font-bold text-emerald-700 uppercase">Langkah 1</span>
                   <p className="font-bold text-slate-900 mt-1">Komunikasi &amp; Konsultansi</p>
                   <span className="text-[10px] text-slate-500 mt-1">Pihak Berkepentingan</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                <div onClick={() => setActiveTab('context')} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-emerald-300 transition">
                   <span className="text-[10px] font-bold text-emerald-700 uppercase">Langkah 2</span>
                   <p className="font-bold text-slate-900 mt-1">Pengwujudan Konteks</p>
-                  <span className="text-[10px] text-slate-500 mt-1">7S &amp; PESTEL</span>
+                  <span className="text-[10px] text-slate-500 mt-1">7S &amp; PESTEL FAMA</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                <div onClick={() => setActiveTab('register')} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-emerald-300 transition">
                   <span className="text-[10px] font-bold text-emerald-700 uppercase">Langkah 3</span>
-                  <p className="font-bold text-slate-900 mt-1">Kenalpasti Risiko &amp; Peluang</p>
-                  <span className="text-[10px] text-slate-500 mt-1">Kod R &amp; Kod P</span>
+                  <p className="font-bold text-slate-900 mt-1">Kenalpasti R &amp; P</p>
+                  <span className="text-[10px] text-slate-500 mt-1">Kod R-FAMA &amp; P-FAMA</span>
                 </div>
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col justify-between">
+                <div onClick={() => setActiveTab('bowtie')} className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col justify-between cursor-pointer hover:border-emerald-400 transition">
                   <span className="text-[10px] font-bold text-emerald-800 uppercase">Langkah 4</span>
                   <p className="font-bold text-emerald-950 mt-1">Analisis Bow-Tie</p>
                   <span className="text-[10px] text-emerald-800 mt-1">Pencegahan &amp; Mitigasi</span>
                 </div>
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col justify-between">
+                <div onClick={() => setActiveTab('matrix')} className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col justify-between cursor-pointer hover:border-emerald-400 transition">
                   <span className="text-[10px] font-bold text-emerald-800 uppercase">Langkah 5</span>
                   <p className="font-bold text-emerald-950 mt-1">Penilaian Dwi-Matriks</p>
                   <span className="text-[10px] text-emerald-800 mt-1">Skala 10&times;10</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                <div onClick={() => setActiveTab('register')} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-emerald-300 transition">
                   <span className="text-[10px] font-bold text-emerald-700 uppercase">Langkah 6</span>
                   <p className="font-bold text-slate-900 mt-1">Pelan Tindak Balas</p>
                   <span className="text-[10px] text-slate-500 mt-1">Rawatan &amp; Peluang</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                <div onClick={() => setActiveTab('monitoring')} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-emerald-300 transition">
                   <span className="text-[10px] font-bold text-emerald-700 uppercase">Langkah 7</span>
                   <p className="font-bold text-slate-900 mt-1">Pemantauan &amp; Kajian</p>
                   <span className="text-[10px] text-slate-500 mt-1">Audit Lembaga</span>
@@ -987,7 +986,7 @@ export default function App() {
                     </p>
                   </div>
                   <span className="text-[11px] px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200">
-                    Data Kumulatif Penilaian
+                    Data Kumulatif Penilaian FAMA
                   </span>
                 </div>
 
@@ -1067,7 +1066,111 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 2: HEAT MATRIX BERKEMBAR 10x10 (RISIKO & PELUANG) */}
+        {/* TAB 2: KONTEKS & PIHAK BERKEPENTINGAN FAMA (LANGKAH 1 & 2) */}
+        {activeTab === 'context' && (
+          <div className="space-y-6 animate-fadeIn">
+            
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4">
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Compass className="w-5 h-5 text-emerald-700" />
+                Langkah 1 &amp; 2: Komunikasi, Konsultansi &amp; Pengwujudan Konteks FAMA
+              </h2>
+              <p className="text-xs text-slate-600 leading-relaxed max-w-4xl">
+                Menetapkan struktur pihak berkepentingan mengikut tadbir urus rasmi FAMA, serta analisis impak isu dalaman dan luaran berteraskan <strong>McKinsey 7S</strong> dan <strong>PESTEL Agromakanan</strong> di bawah Akta FAMA 1965 (Akta 141) &amp; Tatacara Pengurusan Aset 1PP.
+              </p>
+            </div>
+
+            {/* Pihak Berkepentingan FAMA */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-3">
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-emerald-700" />
+                  <h3 className="text-sm font-bold text-slate-900">Pelanggan Utama FAMA</h3>
+                </div>
+                <ul className="text-xs text-slate-600 space-y-2 leading-relaxed">
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>Pengguna &amp; Rakyat Malaysia:</strong> Menikmati penjimatan harga barangan asas di Jualan Agro MADANI dan Pasar Tani.
+                  </li>
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>Petani &amp; Usahawan Ladang Kontrak:</strong> Jaminan pasaran hasil segar tanpa manipulasi orang tengah.
+                  </li>
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>Pengeksport Agromakanan:</strong> Pensijilan kualiti GPL dan pasaran antarabangsa AGROMAS.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-3">
+                <div className="flex items-center gap-2">
+                  <Landmark className="w-5 h-5 text-emerald-700" />
+                  <h3 className="text-sm font-bold text-slate-900">Pihak Berkepentingan Luar</h3>
+                </div>
+                <ul className="text-xs text-slate-600 space-y-2 leading-relaxed">
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>KPKM:</strong> Penjajaran dasar keterjaminan makanan kebangsaan dan dana bantuan bencana.
+                  </li>
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>Kementerian Kewangan (MOF):</strong> Kelulusan Bajet Pembangunan tahunan dan siling perolehan kerajaan.
+                  </li>
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>SPRM &amp; MAQIS:</strong> Pematuhan integriti antirasuah OACP FAMA dan kawalan sempadan GPL.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-3">
+                <div className="flex items-center gap-2">
+                  <Building className="w-5 h-5 text-emerald-700" />
+                  <h3 className="text-sm font-bold text-slate-900">Pihak Berkepentingan Dalaman</h3>
+                </div>
+                <ul className="text-xs text-slate-600 space-y-2 leading-relaxed">
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>Jawatankuasa Audit Lembaga Pengarah FAMA:</strong> Pengawasan statutori tertinggi tadbir urus risiko.
+                  </li>
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>Bahagian Audit Dalam &amp; Bahagian PS:</strong> Audit pematuhan kawalan dalaman dan perancangan strategik agensi.
+                  </li>
+                  <li className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <strong>Pengurus Hab RTC, PPL &amp; Pegawai Operasi:</strong> Pelaksana kawalan bilik sejuk, inventori, dan logistik.
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            {/* McKinsey 7S vs PESTEL Table */}
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4">
+              <h3 className="text-sm font-bold text-slate-900">Analisis Pengaruh Isu Dalaman (McKinsey 7S) &amp; Luaran (PESTEL) Terhadap Objektif FAMA</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <span className="font-bold text-emerald-800 block text-[11px] uppercase tracking-wider">Isu Dalaman (McKinsey 7S):</span>
+                  <div className="space-y-1.5 text-slate-700">
+                    <p className="flex justify-between py-1 border-b border-slate-200"><span>&bull; Strategy (Pelan Risiko Agromakanan MAMPU):</span> <span className="font-bold text-emerald-700">Skor 4 / 5</span></p>
+                    <p className="flex justify-between py-1 border-b border-slate-200"><span>&bull; Systems (ERP FAMA, e-Lesen GPL, IoT Bilik Sejuk):</span> <span className="font-bold text-emerald-700">Skor 4 / 5</span></p>
+                    <p className="flex justify-between py-1 border-b border-slate-200"><span>&bull; Staff (Penguat kuasa GPL, Pegawai RTC/PPL):</span> <span className="font-bold text-emerald-700">Skor 4 / 5</span></p>
+                    <p className="flex justify-between py-1"><span>&bull; Skills &amp; Competency (Penggredan GPL &amp; Analisis Risiko):</span> <span className="font-bold text-emerald-700">Skor 4 / 5</span></p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <span className="font-bold text-emerald-800 block text-[11px] uppercase tracking-wider">Isu Luaran (PESTEL Agromakanan):</span>
+                  <div className="space-y-1.5 text-slate-700">
+                    <p className="flex justify-between py-1 border-b border-slate-200"><span>&bull; Political: Dasar Keterjaminan Makanan Negara KPKM</span> <span className="font-bold text-emerald-700">Impak Tinggi</span></p>
+                    <p className="flex justify-between py-1 border-b border-slate-200"><span>&bull; Economic: Inflasi harga makanan &amp; kos baja input pertanian</span> <span className="font-bold text-emerald-700">Impak Tinggi</span></p>
+                    <p className="flex justify-between py-1 border-b border-slate-200"><span>&bull; Technology: Sensor pintar IoT rantaian sejuk agromakanan</span> <span className="font-bold text-emerald-700">Impak Tinggi</span></p>
+                    <p className="flex justify-between py-1"><span>&bull; Environment: Fenomena El Niño (Kemarau) &amp; La Niña (Banjir)</span> <span className="font-bold text-rose-600">Kritikal</span></p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        )}
+
+        {/* TAB 3: HEAT MATRIX BERKEMBAR 10x10 (RISIKO & PELUANG) */}
         {activeTab === 'matrix' && (
           <div className="space-y-6 animate-fadeIn">
             
@@ -1076,10 +1179,10 @@ export default function App() {
                 <div>
                   <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                     <Grid3X3 className="w-5 h-5 text-emerald-700" />
-                    Heat Matrix Berkembar: Risiko (-VE) vs. Peluang (+VE) [Skala 10 &times; 10]
+                    Heat Matrix Berkembar FAMA: Risiko (-VE) vs. Peluang (+VE) [Skala 10 &times; 10]
                   </h2>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Merujuk Manual Kualiti ISO 9001 (Page 11-12). Matriks Kiri: Matlamat mengurangkan risiko dari Zon Merah $\rightarrow$ Kuning/Hijau. Matriks Kanan: Matlamat merebut dan mengekalkan peluang di Zon Merah/Tinggi!
+                    Pelan Pengurusan Risiko &amp; Peluang FAMA (MS ISO 31000 &amp; ISO 9001:2015). Matriks Kiri: Mengurangkan risiko dari Zon Merah ke Kuning/Hijau. Matriks Kanan: Merebut dan mengekalkan peluang agromakanan di Zon Merah/Tinggi!
                   </p>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
@@ -1103,7 +1206,7 @@ export default function App() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <ShieldAlert className="w-5 h-5 text-rose-600" />
-                      <h3 className="text-sm font-black text-slate-900 tracking-wide uppercase">MATRIKS RISIKO (-VE)</h3>
+                      <h3 className="text-sm font-black text-slate-900 tracking-wide uppercase">MATRIKS RISIKO FAMA (-VE)</h3>
                     </div>
                     <span className="text-[11px] font-semibold text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
                       Ancaman &bull; Matlamat: Turunkan Magnitud
@@ -1118,22 +1221,16 @@ export default function App() {
                     </div>
 
                     <div className="grid grid-cols-10 gap-1 aspect-square bg-slate-100 p-1.5 rounded-lg border border-slate-200">
-                      {/* Generating 100 cells (10 rows from 10 down to 1, 10 cols from 1 to 10) */}
                       {Array.from({ length: 10 }).map((_, rIdx) => {
                         const yVal = 10 - rIdx;
                         return Array.from({ length: 10 }).map((_, cIdx) => {
                           const xVal = cIdx + 1;
                           const mag = xVal * yVal;
                           
-                          // Risk zone coloring:
-                          // High (Merah): mag >= 45 or (xVal >= 7 and yVal >= 6)
-                          // Low (Hijau): mag <= 18 and xVal <= 4 and yVal <= 4
-                          // Medium (Kuning): other
                           const isRed = mag >= 48 || (xVal >= 7 && yVal >= 6);
                           const isGreen = mag <= 20 && xVal <= 5 && yVal <= 4;
                           const bgColor = isRed ? 'bg-rose-100 border-rose-200 text-rose-800' : isGreen ? 'bg-emerald-100 border-emerald-200 text-emerald-800' : 'bg-amber-100 border-amber-200 text-amber-800';
 
-                          // Find matching risks in this cell
                           const matchingPre = items.filter(i => i.type === 'RISK' && i.impactPre === xVal && i.likelihoodPre === yVal);
                           const matchingPost = items.filter(i => i.type === 'RISK' && i.impactPost === xVal && i.likelihoodPost === yVal);
 
@@ -1201,7 +1298,7 @@ export default function App() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-5 h-5 text-emerald-700" />
-                      <h3 className="text-sm font-black text-slate-900 tracking-wide uppercase">MATRIKS PELUANG (+VE)</h3>
+                      <h3 className="text-sm font-black text-slate-900 tracking-wide uppercase">MATRIKS PELUANG FAMA (+VE)</h3>
                     </div>
                     <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                       Peluang &bull; Matlamat: Tingkatkan Magnitud
@@ -1222,8 +1319,6 @@ export default function App() {
                           const xVal = cIdx + 1;
                           const mag = xVal * yVal;
 
-                          // Opportunity zone coloring:
-                          // High Opportunity (Zon Merah/Ungu): Rebut segera!
                           const isHigh = mag >= 48 || (xVal >= 7 && yVal >= 6);
                           const isLow = mag <= 20 && xVal <= 5 && yVal <= 4;
                           const bgColor = isHigh ? 'bg-purple-100 border-purple-200 text-purple-800' : isLow ? 'bg-slate-100 border-slate-200 text-slate-600' : 'bg-emerald-100 border-emerald-200 text-emerald-800';
@@ -1296,7 +1391,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 3: ANALISIS BOW-TIE & INDIKATOR KECEMERLANGAN (LANGKAH 4) */}
+        {/* TAB 4: ANALISIS BOW-TIE & INDIKATOR KECEMERLANGAN (LANGKAH 4) */}
         {activeTab === 'bowtie' && (
           <div className="space-y-6 animate-fadeIn">
             
@@ -1304,10 +1399,10 @@ export default function App() {
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <ShieldAlert className="w-5 h-5 text-emerald-700" />
-                  Langkah 4: Analisis Bow-Tie &amp; Indikator Kecemerlangan Tindakan (Skala 1 - 5)
+                  Langkah 4: Analisis Bow-Tie &amp; Indikator Kecemerlangan Tindakan FAMA (Skala 1 - 5)
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Logik berkadar songsang (Page 10-11): Nilai min rendah tindakan pencegahan &rarr; kebarangkalian adalah tinggi. Nilai min rendah tindakan mitigasi &rarr; impak kerosakan adalah tinggi.
+                  Prinsip Penilaian Songsang: Nilai min rendah tindakan pencegahan bermakna kebarangkalian risiko adalah tinggi; Nilai min rendah tindakan mitigasi bermakna impak kerosakan adalah tinggi.
                 </p>
               </div>
 
@@ -1337,7 +1432,7 @@ export default function App() {
                       <div className="lg:col-span-4 bg-white p-4 rounded-xl border border-slate-200 space-y-3 flex flex-col justify-between shadow-2xs">
                         <div>
                           <span className="text-[10px] font-bold text-rose-700 uppercase tracking-wider block">
-                            2. Punca (7S &amp; PESTEL) &rarr; 3. Pencegahan
+                            2. Punca (7S &amp; PESTEL FAMA) &rarr; 3. Pencegahan
                           </span>
                           <p className="text-slate-800 font-bold text-xs mt-1 leading-snug">{bowtie.hazard}</p>
                           
@@ -1363,7 +1458,7 @@ export default function App() {
                       <div className="lg:col-span-3 bg-gradient-to-br from-emerald-800 to-green-900 text-white p-5 rounded-xl border border-emerald-700 flex flex-col items-center justify-center text-center shadow-md">
                         <AlertTriangle className="w-7 h-7 text-amber-300 mb-2" />
                         <span className="text-[10px] font-bold text-emerald-200 uppercase tracking-wider block">
-                          1. Peristiwa Risiko (Top Event)
+                          1. Peristiwa Risiko (Top Event FAMA)
                         </span>
                         <p className="text-xs font-bold text-white mt-2 leading-relaxed">{bowtie.topEvent}</p>
                       </div>
@@ -1409,7 +1504,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 4: 3 MANDAT TADBIR URUS & TANGGUNGJAWAB */}
+        {/* TAB 5: 3 MANDAT TADBIR URUS FAMA */}
         {activeTab === 'mandates' && (
           <div className="space-y-6 animate-fadeIn">
             
@@ -1419,7 +1514,7 @@ export default function App() {
                 3 Tiang Mandat Tadbir Urus Pengurusan Risiko FAMA
               </h2>
               <p className="text-xs text-slate-600 leading-relaxed max-w-4xl">
-                Menyelaras fungsi utama agensi bagi memastikan pematuhan terhadap standard sektor awam, pengukuhan rantaian sekuriti makanan semasa krisis cuaca ekstrem, dan akauntabiliti belanjawan bersama Jawatankuasa Audit Lembaga.
+                Menyelaras fungsi utama agensi bagi memastikan pematuhan terhadap standard sektor awam, pengukuhan rantaian sekuriti makanan semasa krisis cuaca ekstrem, dan akauntabiliti belanjawan bersama Jawatankuasa Audit Lembaga Pengarah FAMA.
               </p>
             </div>
 
@@ -1502,7 +1597,7 @@ export default function App() {
                   </div>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Menyediakan penilaian impak risiko untuk diselaraskan dengan pelan bajet pembangunan tahunan serta sasaran kerja agensi. Bekerjasama dengan Bahagian Audit Dalam yang melaporkan terus kepada Jawatankuasa Audit Lembaga.
+                  Menyediakan penilaian impak risiko untuk diselaraskan dengan pelan bajet pembangunan tahunan serta sasaran kerja agensi. Bekerjasama dengan Bahagian Audit Dalam yang melaporkan terus kepada Jawatankuasa Audit Lembaga Pengarah FAMA.
                 </p>
                 <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
                   <span className="font-bold text-slate-800 block text-[11px]">Rujukan Institusi Rasmi:</span>
@@ -1532,7 +1627,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 5: DAFTAR RISIKO & PELUANG (MASTER REGISTER) */}
+        {/* TAB 6: DAFTAR INDUK RISIKO & PELUANG FAMA */}
         {activeTab === 'register' && (
           <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden animate-fadeIn">
             
@@ -1540,7 +1635,7 @@ export default function App() {
               <div>
                 <h2 className="text-base font-bold text-slate-900">Daftar Induk Risiko (-VE) &amp; Peluang (+VE) FAMA</h2>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Memaparkan analisis peralihan magnitud mengikut kod daftar R &amp; P berpandukan MS ISO 31000
+                  Memaparkan analisis peralihan magnitud mengikut kod daftar rasmi R-FAMA &amp; P-FAMA berpandukan MS ISO 31000
                 </p>
               </div>
 
@@ -1582,7 +1677,7 @@ export default function App() {
                   onChange={(e) => setMandateFilter(e.target.value)}
                   className="py-1.5 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-emerald-500 focus:bg-white transition"
                 >
-                  <option value="All">Semua Mandat</option>
+                  <option value="All">Semua Mandat FAMA</option>
                   <option value="Menyelaras Pelan Risiko">Menyelaras Pelan Risiko</option>
                   <option value="Kesinambungan Operasi">Kesinambungan Operasi</option>
                   <option value="Pelaporan & Audit Dalam">Pelaporan &amp; Audit Dalam</option>
@@ -1600,7 +1695,7 @@ export default function App() {
                     <th className="py-3 px-4">Magnitud Asal (X,Y)</th>
                     <th className="py-3 px-4">Magnitud Rawatan</th>
                     <th className="py-3 px-4">Status Tindakan</th>
-                    <th className="py-3 px-4">Pegawai Pemilik</th>
+                    <th className="py-3 px-4">Pegawai Pemilik FAMA</th>
                     <th className="py-3 px-4 text-right">Tindakan</th>
                   </tr>
                 </thead>
@@ -1670,7 +1765,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 6: PEMANTAUAN & KAJIAN SEMULA (LANGKAH 7) */}
+        {/* TAB 7: PEMANTAUAN & KAJIAN SEMULA (LANGKAH 7) */}
         {activeTab === 'monitoring' && (
           <div className="space-y-6 animate-fadeIn">
             
@@ -1679,14 +1774,14 @@ export default function App() {
                 <div>
                   <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                     <CheckSquare className="w-5 h-5 text-emerald-700" />
-                    Langkah 7: Pemantauan &amp; Kajian Semula (Jadual Tindak Balas &amp; Usulan Penambahbaikan)
+                    Langkah 7: Pemantauan &amp; Kajian Semula Risiko FAMA (Pelan Tindak Balas &amp; Tindakan Susulan)
                   </h2>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Merujuk Seksyen 7.1.1 (Page 14-15 PDF). Pemantauan berkala setiap 3-6 bulan untuk dibentangkan kepada Jawatankuasa Pengurusan Aset &amp; Stor (JKPAK) dan Jawatankuasa Audit Lembaga.
+                    Tatacara Pemantauan Berkala: Semakan berjadual setiap 3 - 6 bulan untuk dibentangkan kepada Jawatankuasa Pengurusan Aset Kerajaan (JKPAK FAMA) dan Jawatankuasa Audit Lembaga Pengarah FAMA.
                   </p>
                 </div>
                 <div className="text-right text-xs text-slate-600">
-                  <span>Pegawai Pemantau: <strong>Pn. Nor Aziyah (PPT Aset &amp; Stor FAMA)</strong></span>
+                  <span>Pegawai Pemantau: <strong>En. Khairul Anuar (Ketua Cawangan Pengurusan Aset &amp; Stor FAMA) / Urus Setia Risiko</strong></span>
                 </div>
               </div>
 
@@ -1695,7 +1790,7 @@ export default function App() {
                   <thead className="bg-slate-50 text-slate-600 uppercase font-semibold border-b border-slate-200">
                     <tr>
                       <th className="py-3 px-3">Bil</th>
-                      <th className="py-3 px-4">Strategi Yang Dirancang / Pelan Tindakan</th>
+                      <th className="py-3 px-4">Strategi Yang Dirancang / Pelan Tindakan FAMA</th>
                       <th className="py-3 px-4">Risiko / Peluang Berkait</th>
                       <th className="py-3 px-3 text-center text-slate-500">Tidak Diambil</th>
                       <th className="py-3 px-3 text-center text-amber-600">Sedang Diambil</th>
@@ -1780,10 +1875,10 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Rujukan Institusi Rasmi */}
+              {/* Rujukan Institusi Rasmi FAMA */}
               <div className="bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200 space-y-2 text-xs">
                 <span className="font-bold text-emerald-900 block text-[11px] uppercase tracking-wider flex items-center gap-1.5">
-                  <Landmark className="w-3.5 h-3.5 text-emerald-700" /> Dokumen Rujukan &amp; Mandat Kerajaan:
+                  <Landmark className="w-3.5 h-3.5 text-emerald-700" /> Dokumen Rujukan &amp; Mandat Rasmi FAMA:
                 </span>
                 <div className="space-y-1.5">
                   {selectedItem.mandateCitation.map((cite, idx) => (
@@ -1801,9 +1896,9 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Pelan Rawatan & Tindakan */}
+              {/* Pelan Rawatan & Tindakan FAMA */}
               <div className="space-y-2 text-xs">
-                <span className="font-bold text-slate-900 uppercase tracking-wider block">Pelan Tindak Balas &amp; Rawatan (Treatment Plan):</span>
+                <span className="font-bold text-slate-900 uppercase tracking-wider block">Pelan Tindak Balas &amp; Rawatan FAMA (Treatment Plan):</span>
                 <div className="space-y-2">
                   {selectedItem.treatmentPlan.map((tp, idx) => (
                     <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 leading-relaxed">
@@ -1813,10 +1908,10 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Pegawai Bertanggungjawab */}
+              {/* Pegawai Bertanggungjawab FAMA */}
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Pegawai Pemilik:</span>
+                  <span className="text-slate-500">Pegawai Pemilik FAMA:</span>
                   <span className="text-slate-900 font-bold">{selectedItem.owner}</span>
                 </div>
                 <div className="flex justify-between">
@@ -1849,77 +1944,89 @@ export default function App() {
 
       {/* Persistent Bottom Navigation Menu */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg px-4 py-2">
-        <div className="max-w-2xl mx-auto flex items-center justify-around">
+        <div className="max-w-3xl mx-auto flex items-center justify-around">
           
           <button
             onClick={() => setActiveTab('overview')}
-            className={`flex flex-col items-center gap-1 py-1.5 px-2.5 rounded-xl text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-xs font-medium transition ${
               activeTab === 'overview'
                 ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
-            <LayoutDashboard className="w-5 h-5" />
+            <LayoutDashboard className="w-4 h-4" />
             <span className="text-[10px]">Ringkasan</span>
           </button>
 
           <button
+            onClick={() => setActiveTab('context')}
+            className={`flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-xs font-medium transition ${
+              activeTab === 'context'
+                ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+            }`}
+          >
+            <Compass className="w-4 h-4" />
+            <span className="text-[10px]">Konteks (L1-2)</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('matrix')}
-            className={`flex flex-col items-center gap-1 py-1.5 px-2.5 rounded-xl text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-xs font-medium transition ${
               activeTab === 'matrix'
                 ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
-            <Grid3X3 className="w-5 h-5" />
+            <Grid3X3 className="w-4 h-4" />
             <span className="text-[10px]">Dwi-Matriks 10&times;10</span>
           </button>
 
           <button
             onClick={() => setActiveTab('bowtie')}
-            className={`flex flex-col items-center gap-1 py-1.5 px-2.5 rounded-xl text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-xs font-medium transition ${
               activeTab === 'bowtie'
                 ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
-            <ShieldAlert className="w-5 h-5" />
-            <span className="text-[10px]">Bow-Tie (Langkah 4)</span>
+            <ShieldAlert className="w-4 h-4" />
+            <span className="text-[10px]">Bow-Tie (L4)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('mandates')}
-            className={`flex flex-col items-center gap-1 py-1.5 px-2.5 rounded-xl text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-xs font-medium transition ${
               activeTab === 'mandates'
                 ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
-            <Landmark className="w-5 h-5" />
-            <span className="text-[10px]">3 Mandat FAMA</span>
+            <Landmark className="w-4 h-4" />
+            <span className="text-[10px]">3 Mandat</span>
           </button>
 
           <button
             onClick={() => setActiveTab('register')}
-            className={`flex flex-col items-center gap-1 py-1.5 px-2.5 rounded-xl text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-xs font-medium transition ${
               activeTab === 'register'
                 ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
-            <Sliders className="w-5 h-5" />
-            <span className="text-[10px]">Daftar Induk R&amp;P</span>
+            <Sliders className="w-4 h-4" />
+            <span className="text-[10px]">Daftar Induk</span>
           </button>
 
           <button
             onClick={() => setActiveTab('monitoring')}
-            className={`flex flex-col items-center gap-1 py-1.5 px-2.5 rounded-xl text-xs font-medium transition ${
+            className={`flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-xs font-medium transition ${
               activeTab === 'monitoring'
                 ? 'text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold'
                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
-            <CheckSquare className="w-5 h-5" />
+            <CheckSquare className="w-4 h-4" />
             <span className="text-[10px]">Pemantauan (L7)</span>
           </button>
 
